@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import HabitCard from "../components/HabitCard";
+import HabitCard from "../components/HabitCard/HabitCard";
 import HabitForm from "../components/HabitForm";
+import styles from "./DashboardPage.module.scss";
+
+type Frequency = "daily" | "hourly" | "weekly";
 
 interface Habit {
     id: string;
@@ -10,15 +13,27 @@ interface Habit {
     createdAt: string;
     days: Record<string, boolean>;
     userId: string;
+    frequency: Frequency;
+    timeRange?: { from: string; to: string };
 }
 
 const formatDate = (date: Date) =>
     date.toLocaleDateString("ru-RU").split(".").join(".");
 
+const getWeekKey = (date = new Date()) => {
+    const year = date.getFullYear();
+    const week = Math.ceil(
+        ((+date - +new Date(year, 0, 1)) / 86400000 + new Date(year, 0, 1).getDay()) / 7
+    );
+    return `${year}_W${week}`;
+};
+
 const DashboardPage = () => {
     const userId = localStorage.getItem("token");
     const [habits, setHabits] = useState<Habit[]>([]);
-    const today = formatDate(new Date());
+    const now = new Date();
+    const today = formatDate(now);
+    const weekKey = getWeekKey(now);
 
     useEffect(() => {
         const allHabits = JSON.parse(localStorage.getItem("habits") || "[]");
@@ -31,14 +46,21 @@ const DashboardPage = () => {
         setHabits(updatedHabits.filter((h) => h.userId === userId));
     };
 
-    const handleAddHabit = (title: string, color: string) => {
+    const handleAddHabit = (
+        title: string,
+        color: string,
+        frequency: Frequency,
+        timeRange?: { from: string; to: string }
+    ) => {
         const newHabit: Habit = {
             id: uuidv4(),
             title,
             color,
-            createdAt: new Date().toISOString(),
+            createdAt: today,
             days: {},
             userId: userId!,
+            frequency,
+            timeRange,
         };
 
         const allHabits = JSON.parse(localStorage.getItem("habits") || "[]");
@@ -46,16 +68,16 @@ const DashboardPage = () => {
         saveHabits(updatedHabits);
     };
 
-    const toggleDay = (habitId: string) => {
+    const toggleDay = (habitId: string, key: string) => {
         const allHabits = JSON.parse(localStorage.getItem("habits") || "[]");
         const updated = allHabits.map((habit: Habit) => {
             if (habit.id === habitId) {
-                const current = habit.days?.[today] || false;
+                const current = habit.days?.[key] || false;
                 return {
                     ...habit,
                     days: {
                         ...habit.days,
-                        [today]: !current,
+                        [key]: !current,
                     },
                 };
             }
@@ -71,25 +93,75 @@ const DashboardPage = () => {
         saveHabits(updatedHabits);
     };
 
+    const dailyHabits = habits.filter((h) => h.frequency === "daily");
+    const hourlyHabits = habits.filter((h) => h.frequency === "hourly");
+    const weeklyHabits = habits.filter((h) => h.frequency === "weekly");
+
     return (
-        <div>
-            <h2>Ваши привычки на {today}</h2>
+        <div className={styles.wrapper}>
+            <h2 className={styles.title}>Ваши привычки на {today}</h2>
 
             <HabitForm onAddHabit={handleAddHabit} />
 
-            <ul>
-                {habits.map((habit) => (
-                    <HabitCard
-                        key={habit.id}
-                        id={habit.id}
-                        title={habit.title}
-                        color={habit.color}
-                        completed={habit.days?.[today] || false}
-                        onToggle={toggleDay}
-                        onDelete={handleDeleteHabit}
-                    />
-                ))}
-            </ul>
+            {habits.length === 0 ? (
+                <p className={styles.empty}>У вас пока нет привычек.</p>
+            ) : (
+                <>
+                    {dailyHabits.length > 0 && (
+                        <>
+                            <h3 className={styles.sectionTitle}>Ежедневные привычки</h3>
+                            <div className={styles.grid}>
+                                {dailyHabits.map((habit) => (
+                                    <HabitCard
+                                        key={habit.id}
+                                        habit={habit}
+                                        onToggle={toggleDay}
+                                        onDelete={handleDeleteHabit}
+                                        today={today}
+                                        weekKey={weekKey}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    )}
+
+                    {hourlyHabits.length > 0 && (
+                        <>
+                            <h3 className={styles.sectionTitle}>Ежечасные привычки</h3>
+                            <div className={styles.grid}>
+                                {hourlyHabits.map((habit) => (
+                                    <HabitCard
+                                        key={habit.id}
+                                        habit={habit}
+                                        onToggle={toggleDay}
+                                        onDelete={handleDeleteHabit}
+                                        today={today}
+                                        weekKey={weekKey}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    )}
+
+                    {weeklyHabits.length > 0 && (
+                        <>
+                            <h3 className={styles.sectionTitle}>Еженедельные привычки</h3>
+                            <div className={styles.grid}>
+                                {weeklyHabits.map((habit) => (
+                                    <HabitCard
+                                        key={habit.id}
+                                        habit={habit}
+                                        onToggle={toggleDay}
+                                        onDelete={handleDeleteHabit}
+                                        today={today}
+                                        weekKey={weekKey}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    )}
+                </>
+            )}
         </div>
     );
 };
