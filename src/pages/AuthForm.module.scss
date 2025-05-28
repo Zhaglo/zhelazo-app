@@ -14,17 +14,47 @@
   text-align: center;
 }
 
-.error {
-  color: red;
-  margin-top: 0.5rem;
+.formWrapper {
+  text-align: center;
 }
 
-.inputError {
-  border: 1px solid #dc3545;
+.formGroup {
+  margin-bottom: 1.5rem;
+  position: relative;
 }
 
 .helperText {
   font-size: 0.85rem;
   color: #dc3545;
   margin-top: 0.25rem;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.visible {
+  height: auto;
+  opacity: 1;
+}
+
+.inputError {
+  border: 1px solid #dc3545;
+}
+
+.error {
+  color: #dc3545;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.linkPrompt {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.visible {
+  height: auto;
+  opacity: 1;
 }
