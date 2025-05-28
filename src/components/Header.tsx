@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import styles from "./Header.module.scss";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -9,33 +10,22 @@ const Header = () => {
     };
 
     return (
-        <header
-            style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "1rem",
-                backgroundColor: "#007bff",
-                color: "#fff",
-            }}
-        >
-            <nav style={{ display: "flex", gap: "1rem" }}>
-                <NavLink to="/dashboard" style={{ color: "#fff", textDecoration: "none" }}>
+        <header className={styles.header}>
+            <nav className={styles.nav}>
+                <NavLink to="/dashboard" className={({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link}>
                     Главная
                 </NavLink>
-                <NavLink to="/stats" style={{ color: "#fff", textDecoration: "none" }}>
+                <NavLink to="/stats" className={({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link}>
                     Статистика
                 </NavLink>
-                <NavLink to="/motivation" style={{ color: "#fff", textDecoration: "none" }}>
+                <NavLink to="/motivation" className={({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link}>
                     Мотивация
                 </NavLink>
-                <NavLink to="/profile" style={{ color: "#fff", textDecoration: "none" }}>
+                <NavLink to="/profile" className={({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link}>
                     Профиль
                 </NavLink>
             </nav>
-            <button onClick={handleLogout} style={{ background: "transparent", border: "1px solid #fff", color: "#fff", padding: "0.5rem 1rem", borderRadius: "4px" }}>
-                Выйти
-            </button>
+            <button className={styles.logout} onClick={handleLogout}>Выйти</button>
         </header>
     );
 };
