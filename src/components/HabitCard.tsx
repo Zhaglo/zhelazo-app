@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./HabitCard.module.scss";
 
 interface HabitCardProps {
     id: string;
@@ -19,24 +20,20 @@ const HabitCard: React.FC<HabitCardProps> = ({
                                              }) => {
     return (
         <li
-            style={{
-                borderLeft: `8px solid ${color}`,
-                padding: "8px",
-                marginBottom: "8px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-            }}
+            className={styles.card}
+            style={{ borderLeft: `8px solid ${color}` }}
         >
-            <label>
+            <label className={styles.label}>
                 <input
                     type="checkbox"
                     checked={completed}
                     onChange={() => onToggle(id)}
-                />{" "}
+                />
                 {title}
             </label>
-            <button onClick={() => onDelete(id)}>❌</button>
+            <button onClick={() => onDelete(id)} className="btn btn-outline btn-danger">
+                ❌
+            </button>
         </li>
     );
 };

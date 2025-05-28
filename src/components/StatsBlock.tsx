@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./StatsBlock.module.scss";
 
 interface StatsBlockProps {
     label: string;
@@ -7,17 +8,9 @@ interface StatsBlockProps {
 
 const StatsBlock: React.FC<StatsBlockProps> = ({ label, value }) => {
     return (
-        <div
-            style={{
-                background: "#f2f2f2",
-                padding: "1rem",
-                marginBottom: "1rem",
-                borderRadius: "6px",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
-            }}
-        >
-            <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{value}</div>
-            <div style={{ color: "#555" }}>{label}</div>
+        <div className={styles.block}>
+            <div className={styles.value}>{value}</div>
+            <div className={styles.label}>{label}</div>
         </div>
     );
 };

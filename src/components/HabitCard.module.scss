@@ -1,0 +1,25 @@
+.card {
+  border-left: 8px solid var(--habit-color);
+  padding: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.label {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.delete {
+  background: transparent;
+  border: none;
+  color: #d00;
+  font-size: 1.2rem;
+  cursor: pointer;
+}

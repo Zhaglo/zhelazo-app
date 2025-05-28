@@ -34,7 +34,7 @@ const ProfilePage = () => {
         <div>
             <h2>Профиль</h2>
             <UserBadge username={user.username} email={user.email} />
-            <button onClick={handleLogout}>Выйти</button>
+            <button onClick={handleLogout} className="btn btn-outline">Выйти</button>
         </div>
     );
 };

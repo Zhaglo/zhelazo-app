@@ -25,7 +25,7 @@ const Header = () => {
                     Профиль
                 </NavLink>
             </nav>
-            <button className={styles.logout} onClick={handleLogout}>Выйти</button>
+            <button className="btn btn-outline-light" onClick={handleLogout}>Выйти</button>
         </header>
     );
 };

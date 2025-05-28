@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Input from "../components/ui/Input";
+import Button from "../components/ui/Button";
+import styles from "./AuthForm.module.scss";
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -35,25 +38,25 @@ const LoginPage = () => {
     };
 
     return (
-        <div>
-            <h2>Вход</h2>
+        <div className={styles.wrapper}>
+            <h2 className={styles.title}>Вход</h2>
             <form onSubmit={handleSubmit}>
-                <input
+                <Input
                     name="email"
                     type="email"
                     placeholder="Email"
                     onChange={handleChange}
                     required
                 />
-                <input
+                <Input
                     name="password"
                     type="password"
                     placeholder="Пароль"
                     onChange={handleChange}
                     required
                 />
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                <button type="submit">Войти</button>
+                {error && <p className={styles.error}>{error}</p>}
+                <Button type="submit">Войти</Button>
             </form>
         </div>
     );

@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Input from "../components/ui/Input";
+import Button from "../components/ui/Button";
+import styles from "./AuthForm.module.scss";
 
 const RegisterPage = () => {
     const navigate = useNavigate();
@@ -28,8 +31,8 @@ const RegisterPage = () => {
         }
 
         const existingUsers = JSON.parse(localStorage.getItem("users") || "[]");
-
         const userExists = existingUsers.find((user: any) => user.email === email);
+
         if (userExists) {
             setError("Пользователь с таким email уже существует");
             return;
@@ -37,21 +40,43 @@ const RegisterPage = () => {
 
         const newUser = { id: Date.now(), username, email, password };
         localStorage.setItem("users", JSON.stringify([...existingUsers, newUser]));
-        localStorage.setItem("token", String(newUser.id)); // "авторизуем" сразу
-
+        localStorage.setItem("token", String(newUser.id));
         navigate("/dashboard");
     };
 
     return (
-        <div>
-            <h2>Регистрация</h2>
+        <div className={styles.wrapper}>
+            <h2 className={styles.title}>Регистрация</h2>
             <form onSubmit={handleSubmit}>
-                <input name="username" placeholder="Имя" onChange={handleChange} required />
-                <input name="email" type="email" placeholder="Email" onChange={handleChange} required />
-                <input name="password" type="password" placeholder="Пароль" onChange={handleChange} required />
-                <input name="confirmPassword" type="password" placeholder="Повторите пароль" onChange={handleChange} required />
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                <button type="submit">Зарегистрироваться</button>
+                <Input
+                    name="username"
+                    placeholder="Имя"
+                    onChange={handleChange}
+                    required
+                />
+                <Input
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                    onChange={handleChange}
+                    required
+                />
+                <Input
+                    name="password"
+                    type="password"
+                    placeholder="Пароль"
+                    onChange={handleChange}
+                    required
+                />
+                <Input
+                    name="confirmPassword"
+                    type="password"
+                    placeholder="Повторите пароль"
+                    onChange={handleChange}
+                    required
+                />
+                {error && <p className={styles.error}>{error}</p>}
+                <Button type="submit">Зарегистрироваться</Button>
             </form>
         </div>
     );

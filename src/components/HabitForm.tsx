@@ -1,6 +1,5 @@
-import {useState} from "react";
-import Input from "./ui/Input";
-import Button from "./ui/Button";
+import React, { useState } from "react";
+import styles from "./HabitForm.module.scss";
 
 interface HabitFormProps {
     onAddHabit: (title: string, color: string) => void;
@@ -18,20 +17,24 @@ const HabitForm: React.FC<HabitFormProps> = ({ onAddHabit }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Input
+        <form onSubmit={handleSubmit} className={styles.form}>
+            <input
                 type="text"
                 placeholder="Название привычки"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
+                className={styles.input}
             />
-            <Input
+            <input
                 type="color"
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
+                className={styles.color}
             />
-            <Button type="submit">Добавить</Button>
+            <button type="submit" className="btn btn-success">
+                Добавить
+            </button>
         </form>
     );
 };
