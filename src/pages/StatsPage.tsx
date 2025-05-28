@@ -9,6 +9,7 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
+import StatsBlock from "../components/StatsBlock";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
@@ -85,9 +86,10 @@ const StatsPage = () => {
     return (
         <div>
             <h2>Статистика</h2>
-            <p>Всего привычек: {totalHabits}</p>
-            <p>Всего выполнений: {totalCompletions}</p>
-            <p>Максимальный стрик: {bestStreak} дней подряд</p>
+
+            <StatsBlock label="Всего привычек" value={totalHabits} />
+            <StatsBlock label="Всего выполнений" value={totalCompletions} />
+            <StatsBlock label="Максимальный стрик" value={`${bestStreak} дней подряд`} />
 
             {habits.length > 0 && (
                 <div style={{ maxWidth: "600px", marginTop: "2rem" }}>

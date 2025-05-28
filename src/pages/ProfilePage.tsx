@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserBadge from "../components/UserBadge";
 
 interface User {
     id: string;
@@ -32,8 +33,7 @@ const ProfilePage = () => {
     return (
         <div>
             <h2>Профиль</h2>
-            <p><strong>Имя:</strong> {user.username}</p>
-            <p><strong>Email:</strong> {user.email}</p>
+            <UserBadge username={user.username} email={user.email} />
             <button onClick={handleLogout}>Выйти</button>
         </div>
     );

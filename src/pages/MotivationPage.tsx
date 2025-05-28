@@ -1,3 +1,5 @@
+import QuoteCard from "../components/QuoteCard";
+
 const fakeAchievements = [
     {
         user: "Алина",
@@ -53,7 +55,7 @@ const MotivationPage = () => {
             <div style={{ marginTop: "2rem" }}>
                 <h3>Цитата дня:</h3>
                 <p style={{ fontStyle: "italic", fontSize: "1.1rem" }}>
-                    {motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)]}
+                    <QuoteCard text={motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)]} />
                 </p>
             </div>
         </div>

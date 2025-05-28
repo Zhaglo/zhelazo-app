@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import HabitCard from "../components/HabitCard";
+import HabitForm from "../components/HabitForm";
 
 interface Habit {
     id: string;
@@ -10,16 +12,13 @@ interface Habit {
     userId: string;
 }
 
+const formatDate = (date: Date) =>
+    date.toLocaleDateString("ru-RU").split(".").join(".");
+
 const DashboardPage = () => {
     const userId = localStorage.getItem("token");
     const [habits, setHabits] = useState<Habit[]>([]);
-    const [title, setTitle] = useState("");
-    const [color, setColor] = useState("#00bfff");
-
-    const formatDate = (date: Date) =>
-        date.toLocaleDateString("ru-RU").split(".").join(".");
-
-    const today = formatDate(new Date()); // "28.05.2025"
+    const today = formatDate(new Date());
 
     useEffect(() => {
         const allHabits = JSON.parse(localStorage.getItem("habits") || "[]");
@@ -32,9 +31,7 @@ const DashboardPage = () => {
         setHabits(updatedHabits.filter((h) => h.userId === userId));
     };
 
-    const handleAddHabit = (e: React.FormEvent) => {
-        e.preventDefault();
-
+    const handleAddHabit = (title: string, color: string) => {
         const newHabit: Habit = {
             id: uuidv4(),
             title,
@@ -46,14 +43,6 @@ const DashboardPage = () => {
 
         const allHabits = JSON.parse(localStorage.getItem("habits") || "[]");
         const updatedHabits = [...allHabits, newHabit];
-        saveHabits(updatedHabits);
-        setTitle("");
-        setColor("#00bfff");
-    };
-
-    const handleDeleteHabit = (habitId: string) => {
-        const allHabits = JSON.parse(localStorage.getItem("habits") || "[]");
-        const updatedHabits = allHabits.filter((h: Habit) => h.id !== habitId);
         saveHabits(updatedHabits);
     };
 
@@ -76,49 +65,29 @@ const DashboardPage = () => {
         saveHabits(updated);
     };
 
+    const handleDeleteHabit = (habitId: string) => {
+        const allHabits = JSON.parse(localStorage.getItem("habits") || "[]");
+        const updatedHabits = allHabits.filter((h: Habit) => h.id !== habitId);
+        saveHabits(updatedHabits);
+    };
+
     return (
         <div>
             <h2>Ваши привычки на {today}</h2>
 
-            <form onSubmit={handleAddHabit}>
-                <input
-                    type="text"
-                    placeholder="Название привычки"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    required
-                />
-                <input
-                    type="color"
-                    value={color}
-                    onChange={(e) => setColor(e.target.value)}
-                />
-                <button type="submit">Добавить</button>
-            </form>
+            <HabitForm onAddHabit={handleAddHabit} />
 
             <ul>
                 {habits.map((habit) => (
-                    <li
+                    <HabitCard
                         key={habit.id}
-                        style={{
-                            borderLeft: `8px solid ${habit.color}`,
-                            padding: "8px",
-                            marginBottom: "8px",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                        }}
-                    >
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={habit.days?.[today] || false}
-                                onChange={() => toggleDay(habit.id)}
-                            />{" "}
-                            {habit.title}
-                        </label>
-                        <button onClick={() => handleDeleteHabit(habit.id)}>❌</button>
-                    </li>
+                        id={habit.id}
+                        title={habit.title}
+                        color={habit.color}
+                        completed={habit.days?.[today] || false}
+                        onToggle={toggleDay}
+                        onDelete={handleDeleteHabit}
+                    />
                 ))}
             </ul>
         </div>
