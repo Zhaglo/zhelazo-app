@@ -1,6 +1,6 @@
-import { Navigate, Outlet } from "react-router-dom";
+import Header from "../components/Header";
+import { Outlet, Navigate } from "react-router-dom";
 
-// Заглушка проверки авторизации — позже заменим на реальную проверку
 const isAuthenticated = () => {
     return !!localStorage.getItem("token");
 };
@@ -12,8 +12,10 @@ const PrivateLayout = () => {
 
     return (
         <div>
-            {/* Можно добавить общий Header/NavBar тут */}
-            <Outlet />
+            <Header />
+            <main style={{ padding: "1rem" }}>
+                <Outlet />
+            </main>
         </div>
     );
 };
