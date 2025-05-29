@@ -1,0 +1,17 @@
+@use "HabitCard.module" as *;
+
+/* Сетка и визуализация streak (недельный прогресс) */
+.streakRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 16px 0;
+  margin-bottom: 0.75rem;
+  gap: 6px;
+}
+
+.weekRow {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+  margin-top: -0.5rem;
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import styles from "./HabitCard.module.scss";
+import base from "./HabitCard.module.scss";     // общие стили
+import styles from "./DailyCard.module.scss";   // стили только для дневных
 import { DailyCardProps } from "../../types/props";
 
 const DailyCard = ({ habit, onToggle, onDelete, today }: DailyCardProps) => {
@@ -18,16 +19,16 @@ const DailyCard = ({ habit, onToggle, onDelete, today }: DailyCardProps) => {
             h.id === habit.id ? { ...h, description: desc } : h
         );
         localStorage.setItem("habits", JSON.stringify(updatedHabits));
-        habit.description = desc; // обновим локально
+        habit.description = desc;
         setIsEditing(false);
     };
 
     return (
         <div
-            className={`${styles.card} ${doneToday ? styles.completed : ""}`}
+            className={`${base.card} ${doneToday ? base.completed : ""}`}
             style={{ ["--color" as any]: habit.color }}
         >
-            <div className={styles.colorStripe} />
+            <div className={base.colorStripe} />
 
             <div className={styles.weekProgressWrapper}>
                 <div className={styles.weekProgress}>
@@ -43,28 +44,28 @@ const DailyCard = ({ habit, onToggle, onDelete, today }: DailyCardProps) => {
                 </div>
             </div>
 
-            <div className={styles.content}>
-                <div className={styles.header}>
-                    <h3 className={styles.title}>{habit.title}</h3>
+            <div className={base.content}>
+                <div className={base.header}>
+                    <h3 className={base.title}>{habit.title}</h3>
                     <div style={{ display: "flex", gap: "0.5rem" }}>
-                        <button className={styles.edit} onClick={() => setIsEditing(p => !p)} title="Редактировать">✏️</button>
-                        <button className={styles.delete} onClick={() => onDelete(habit.id)} title="Удалить">🗑</button>
+                        <button className={base.edit} onClick={() => setIsEditing(p => !p)} title="Редактировать">✏️</button>
+                        <button className={base.delete} onClick={() => onDelete(habit.id)} title="Удалить">🗑</button>
                     </div>
                 </div>
 
-                <div className={styles.bottomInfo}>
+                <div className={base.bottomInfo}>
                     <span>Дней подряд: {streak}</span>
                 </div>
 
                 <button
-                    className={`${styles.checkBtn} ${doneToday ? styles.done : ""}`}
+                    className={`${base.checkBtn} ${doneToday ? base.done : ""}`}
                     onClick={handleToggle}
                 >
                     {doneToday && "✓"}
                 </button>
 
                 {isEditing && (
-                    <div className={styles.descriptionEditor}>
+                    <div className={base.descriptionEditor}>
                         <textarea
                             value={desc}
                             onChange={(e) => setDesc(e.target.value)}
@@ -76,23 +77,21 @@ const DailyCard = ({ habit, onToggle, onDelete, today }: DailyCardProps) => {
                 )}
             </div>
 
-            {/* Стрелка — всегда отображается */}
             {(habit.description || habit.createdAt || isEditing) && (
                 <div
-                    className={`${styles.slideTrigger} ${showDescription ? styles.open : ""}`}
+                    className={`${base.slideTrigger} ${showDescription ? base.open : ""}`}
                     onClick={() => setShowDescription((p) => !p)}
                 >
-                    <div className={styles.slideArrow}></div>
+                    <div className={base.slideArrow}></div>
                 </div>
             )}
 
-            {/* Описание — выезжает по флагу showDescription */}
             {(habit.description || habit.createdAt) && (
-                <div className={`${styles.descriptionWrapper} ${showDescription ? styles.open : ""}`}>
-                    <div className={styles.slideContent}>
+                <div className={`${base.descriptionWrapper} ${showDescription ? base.open : ""}`}>
+                    <div className={base.slideContent}>
                         {habit.description && <p>{habit.description}</p>}
                         {habit.createdAt && (
-                            <p className={styles.createdAt}>Создано: {habit.createdAt}</p>
+                            <p className={base.createdAt}>Создано: {habit.createdAt}</p>
                         )}
                     </div>
                 </div>

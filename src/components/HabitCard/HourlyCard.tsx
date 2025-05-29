@@ -1,5 +1,6 @@
 import { useState } from "react";
-import styles from "./HabitCard.module.scss";
+import base from "./HabitCard.module.scss";
+import styles from "./HourlyCard.module.scss";
 import { HourlyCardProps } from "../../types/props";
 
 const generateHours = (from: string, to: string): string[] => {
@@ -39,8 +40,6 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
         });
     };
 
-    const toggleEdit = () => setIsEditing((prev) => !prev);
-
     const saveDescription = () => {
         const allHabits = JSON.parse(localStorage.getItem("habits") || "[]");
         const updatedHabits = allHabits.map((h: any) =>
@@ -53,21 +52,21 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
 
     return (
         <div
-            className={`${styles.card} ${doneHours.length === hours.length ? styles.completed : ""}`}
+            className={`${base.card} ${doneHours.length === hours.length ? base.completed : ""}`}
             style={{ ["--color" as any]: habit.color }}
         >
-            <div className={styles.colorStripe} />
+            <div className={base.colorStripe} />
 
-            <div className={styles.content}>
-                <div className={styles.header}>
-                    <h3 className={styles.title}>{habit.title}</h3>
+            <div className={base.content}>
+                <div className={base.header}>
+                    <h3 className={base.title}>{habit.title}</h3>
                     <div style={{ display: "flex", gap: "0.5rem" }}>
-                        <button className={styles.edit} onClick={toggleEdit} title="Редактировать">✏️</button>
-                        <button className={styles.delete} onClick={() => onDelete(habit.id)} title="Удалить">🗑</button>
+                        <button className={base.edit} onClick={() => setIsEditing(p => !p)} title="Редактировать">✏️</button>
+                        <button className={base.delete} onClick={() => onDelete(habit.id)} title="Удалить">🗑</button>
                     </div>
                 </div>
 
-                <div className={styles.meta}>
+                <div className={base.meta}>
                     <span>Выполнено: {doneHours.length}/{hours.length}</span>
                 </div>
 
@@ -102,43 +101,38 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
                         {hoveringCenter ? (pct === 100 ? "✕" : "✓") : `${pct}%`}
                     </div>
                 </div>
+
+                {isEditing && (
+                    <div className={base.descriptionEditor}>
+                        <textarea
+                            value={desc}
+                            onChange={(e) => setDesc(e.target.value)}
+                            rows={3}
+                            placeholder="Описание привычки"
+                        />
+                        <button onClick={saveDescription} className="btn btn-success btn-sm">Сохранить</button>
+                    </div>
+                )}
             </div>
 
-            {/* Стрелка */}
-            {(habit.description || habit.createdAt) && !isEditing && (
-                <div
-                    className={`${styles.slideTrigger} ${showDescription ? styles.open : ""}`}
-                    onClick={() => setShowDescription((p) => !p)}
-                >
-                    <div className={styles.slideArrow}></div>
-                </div>
-            )}
-
-            {/* Контент описания */}
             {!isEditing && (habit.description || habit.createdAt) && (
-                <div className={`${styles.descriptionWrapper} ${showDescription ? styles.open : ""}`}>
-                    <div className={styles.slideContent}>
-                        {habit.description && <p>{habit.description}</p>}
-                        {habit.createdAt && (
-                            <p className={styles.createdAt}>Создано: {habit.createdAt}</p>
-                        )}
+                <>
+                    <div
+                        className={`${base.slideTrigger} ${showDescription ? base.open : ""}`}
+                        onClick={() => setShowDescription((p) => !p)}
+                    >
+                        <div className={base.slideArrow}></div>
                     </div>
-                </div>
-            )}
 
-            {/* Режим редактирования описания */}
-            {isEditing && (
-                <div className={styles.descriptionEditor}>
-                    <textarea
-                        value={desc}
-                        onChange={(e) => setDesc(e.target.value)}
-                        rows={3}
-                        placeholder="Описание привычки"
-                    />
-                    <button onClick={saveDescription} className="btn btn-success btn-sm">
-                        Сохранить
-                    </button>
-                </div>
+                    <div className={`${base.descriptionWrapper} ${showDescription ? base.open : ""}`}>
+                        <div className={base.slideContent}>
+                            {habit.description && <p>{habit.description}</p>}
+                            {habit.createdAt && (
+                                <p className={base.createdAt}>Создано: {habit.createdAt}</p>
+                            )}
+                        </div>
+                    </div>
+                </>
             )}
         </div>
     );

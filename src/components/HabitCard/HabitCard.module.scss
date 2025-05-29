@@ -1,16 +1,16 @@
-/* ───────── карточка ───────── */
+/* ───────── базовая карточка ───────── */
 .card {
   position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: 14px;
   min-width: 300px;
   max-width: 300px;
-  overflow: visible;
+  border-radius: 14px;
   background: #fff;
   border: 1px solid #eee;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  overflow: visible;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
 
   &:hover {
     transform: translateY(-5px) rotate(-0.4deg);
@@ -20,10 +20,10 @@
     filter: grayscale(0.35) opacity(0.7);
     box-shadow: none;
   }
-}
 
-.card.expanded {
-  z-index: 2;
+  &.expanded {
+    z-index: 2;
+  }
 }
 
 .colorStripe {
@@ -48,21 +48,6 @@
   margin: 0;
 }
 
-.delete,
-.edit {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 1.05rem;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.card:hover .delete,
-.card:hover .edit {
-  opacity: 0.7;
-}
-
 .meta {
   margin: 0.5rem 0 1rem;
   font-size: 0.9rem;
@@ -72,9 +57,18 @@
   flex-wrap: wrap;
 }
 
-.frequency {
-  font-size: 0.9rem;
-  margin-bottom: 0.75rem;
+.delete,
+.edit {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1.05rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.card:hover .delete,
+.card:hover .edit {
+  opacity: 0.7;
 }
 
 .checkBtn {
@@ -104,22 +98,11 @@
   margin-top: 0.75rem;
 }
 
-/* выезжающее описание */
-.slideWrapper {
-  overflow: hidden;
-  transition: max-height 0.4s ease;
-  max-height: 40px;
-}
-.slideWrapper.open {
-  max-height: 300px; /* регулируй по содержанию */
-}
-
 .descriptionWrapper {
   overflow: hidden;
   transition: max-height 0.4s ease;
   max-height: 0;
 }
-
 .descriptionWrapper.open {
   max-height: 300px;
 }
@@ -130,11 +113,9 @@
   background: var(--color);
   cursor: pointer;
   overflow: hidden;
-
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
 }
-
 .slideTrigger.open {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -164,85 +145,32 @@
   word-break: break-word;
   overflow-wrap: break-word;
 }
-
-/* недельные точки */
-.weekRow {
-  display: flex;
-  gap: 0.4rem;
-  margin-bottom: 1.2rem;
-  margin-top: -0.5rem;
-}
-.filledDot,
-.emptyDot {
-  flex-grow: 1;
-  height: 16px;
-  border-radius: 50%;
-}
-.filledDot {
-  background-color: var(--color);
-}
-.emptyDot {
-  background-color: #ddd;
+.slideContent .createdAt {
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 0.5rem;
 }
 
-/* часовой круг */
-.hourCircle {
-  position: relative;
-  width: 220px;
-  height: 220px;
-  margin: 3rem auto 0;
-}
-.hourDot {
+.bottomInfo {
   position: absolute;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: #eee;
-  border: none;
-  font-weight: bold;
-  color: #444;
-  transform: translate(-50%, -50%);
-  transition: background 0.25s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.hourDot.done {
-  background: var(--color);
-  color: white;
-}
-.hourCenter {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-weight: bold;
-  font-size: 1.1rem;
-  color: #222;
-  text-align: center;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  transition: background 0.2s ease;
-}
-.hourCenter:hover {
-  background: rgba(0, 0, 0, 0.05);
+  bottom: 18px;
+  left: 18px;
+  font-size: 0.9rem;
+  color: #666;
 }
 
+/* Общие стили для точек прогресса недели */
 .weekProgressWrapper {
   padding: 20px 16px 0;
   margin-bottom: 0.75rem;
 }
+
 .weekProgress {
   display: flex;
   justify-content: space-between;
   gap: 6px;
 }
+
 .weekDot {
   width: 18px;
   height: 18px;
@@ -254,24 +182,16 @@
   background: var(--color, #3aaee0);
 }
 
-.slideContent .createdAt {
-  font-size: 0.85rem;
-  color: #888;
-  margin-top: 0.5rem;
+/* Общие стили для недельных точек streak */
+.filledDot,
+.emptyDot {
+  flex-grow: 1;
+  height: 16px;
+  border-radius: 50%;
 }
-
-.streakRow {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 16px 0;
-  margin-bottom: 0.75rem;
-  gap: 6px;
+.filledDot {
+  background-color: var(--color);
 }
-
-.bottomInfo {
-  position: absolute;
-  bottom: 18px;
-  left: 18px;
-  font-size: 0.9rem;
-  color: #666;
+.emptyDot {
+  background-color: #ddd;
 }
