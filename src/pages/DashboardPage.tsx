@@ -121,7 +121,7 @@ const DashboardPage = () => {
                     {dailyHabits.length > 0 && (
                         <section className={styles.section}>
                             <h3 className={styles.sectionTitle}>Ежедневные привычки</h3>
-                            <div className={styles.grid}>
+                            <div className={`${styles.grid} ${dailyHabits.length >= 4 ? styles.balanced : ""}`}>
                                 {dailyHabits.map((habit) => (
                                     <HabitCard
                                         key={habit.id}
@@ -139,7 +139,7 @@ const DashboardPage = () => {
                     {hourlyHabits.length > 0 && (
                         <section className={styles.section}>
                             <h3 className={styles.sectionTitle}>Ежечасные привычки</h3>
-                            <div className={styles.grid}>
+                            <div className={`${styles.grid} ${hourlyHabits.length >= 4 ? styles.balanced : ""}`}>
                                 {hourlyHabits.map((habit) => (
                                     <HabitCard
                                         key={habit.id}
@@ -157,7 +157,7 @@ const DashboardPage = () => {
                     {weeklyHabits.length > 0 && (
                         <section className={styles.section}>
                             <h3 className={styles.sectionTitle}>Еженедельные привычки</h3>
-                            <div className={styles.grid}>
+                            <div className={`${styles.grid} ${weeklyHabits.length >= 4 ? styles.balanced : ""}`}>
                                 {weeklyHabits.map((habit) => (
                                     <HabitCard
                                         key={habit.id}
