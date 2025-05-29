@@ -119,25 +119,25 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
                 )}
             </div>
 
-            {(habit.description || habit.createdAt || isEditing) && (
-                <>
-                    <div
-                        className={`${base.slideTrigger} ${showDescription ? base.open : ""}`}
-                        onClick={() => setShowDescription((p) => !p)}
-                    >
-                        <div className={base.slideArrow}></div>
-                    </div>
-
-                    <div className={`${base.descriptionWrapper} ${showDescription ? base.open : ""}`}>
-                        <div className={base.slideContent}>
-                            {!isEditing && habit.description && <p>{habit.description}</p>}
-                            {!isEditing && habit.createdAt && (
-                                <p className={base.createdAt}>Создано: {habit.createdAt}</p>
-                            )}
+                {(habit.description || habit.createdAt || isEditing) && (
+                    <>
+                        <div
+                            className={`${base.slideTrigger} ${showDescription ? base.open : ""}`}
+                            onClick={() => setShowDescription((p) => !p)}
+                        >
+                            <div className={base.slideArrow}></div>
                         </div>
-                    </div>
-                </>
-            )}
+
+                        <div className={`${base.descriptionWrapper} ${showDescription ? base.open : ""}`}>
+                            <div className={base.slideContent}>
+                                {habit.description && <p>{habit.description}</p>}
+                                {habit.createdAt && (
+                                    <p className={base.createdAt}>Создано: {habit.createdAt}</p>
+                                )}
+                            </div>
+                        </div>
+                    </>
+                )}
         </div>
     );
 };
