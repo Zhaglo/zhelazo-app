@@ -57,7 +57,7 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
         >
             <div className={base.colorStripe} />
 
-            <div className={base.content}>
+            <div className={`${base.content} ${styles.trimBottom}`}>
                 <div className={base.header}>
                     <h3 className={base.title}>{habit.title}</h3>
                     <div style={{ display: "flex", gap: "0.5rem" }}>
