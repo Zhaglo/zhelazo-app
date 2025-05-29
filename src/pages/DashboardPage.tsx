@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import HabitCard from "../components/HabitCard/HabitCard";
-import HabitForm from "../components/HabitForm";
+import HabitModal from "../components/HabitModal";
 import styles from "./DashboardPage.module.scss";
 
 type Frequency = "daily" | "hourly" | "weekly";
@@ -14,6 +14,7 @@ interface Habit {
     days: Record<string, boolean>;
     userId: string;
     frequency: Frequency;
+    description?: string;
     timeRange?: { from: string; to: string };
 }
 
@@ -31,6 +32,8 @@ const getWeekKey = (date = new Date()) => {
 const DashboardPage = () => {
     const userId = localStorage.getItem("token");
     const [habits, setHabits] = useState<Habit[]>([]);
+    const [showModal, setShowModal] = useState(false);
+
     const now = new Date();
     const today = formatDate(now);
     const weekKey = getWeekKey(now);
@@ -50,6 +53,7 @@ const DashboardPage = () => {
         title: string,
         color: string,
         frequency: Frequency,
+        description?: string,
         timeRange?: { from: string; to: string }
     ) => {
         const newHabit: Habit = {
@@ -60,6 +64,7 @@ const DashboardPage = () => {
             days: {},
             userId: userId!,
             frequency,
+            description,
             timeRange,
         };
 
@@ -101,7 +106,19 @@ const DashboardPage = () => {
         <div className={styles.wrapper}>
             <h2 className={styles.title}>Ваши привычки на {today}</h2>
 
-            <HabitForm onAddHabit={handleAddHabit} />
+            <button className={styles.addBtn} onClick={() => setShowModal(true)}>
+                ➕ Добавить привычку
+            </button>
+
+            {showModal && (
+                <HabitModal
+                    onClose={() => setShowModal(false)}
+                    onAddHabit={(title, color, frequency, description, timeRange) => {
+                        handleAddHabit(title, color, frequency, description, timeRange);
+                        setShowModal(false);
+                    }}
+                />
+            )}
 
             {habits.length === 0 ? (
                 <p className={styles.empty}>У вас пока нет привычек.</p>

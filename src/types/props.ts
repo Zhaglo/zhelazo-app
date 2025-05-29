@@ -17,3 +17,16 @@ export interface HourlyCardProps extends BaseCardProps {
 export interface WeeklyCardProps extends BaseCardProps {
     weekKey: string;
 }
+
+import { Frequency, TimeRange } from "./habit";
+
+export interface HabitModalProps {
+    onClose: () => void;
+    onAddHabit: (
+        title: string,
+        color: string,
+        frequency: Frequency,
+        description?: string,
+        timeRange?: TimeRange
+    ) => void;
+}
