@@ -54,26 +54,28 @@ const WeeklyCard = ({ habit, onToggle, onDelete, weekKey }: WeeklyCardProps) => 
                     <span>Недель подряд: {totalDone}</span>
                 </div>
 
-                {!isEditing && (
-                    <button
-                        className={`${base.checkBtn} ${isChecked ? base.done : ""}`}
-                        onClick={() => onToggle(habit.id, weekKey)}
-                    >
-                        {isChecked && "✓"}
-                    </button>
-                )}
+                <button
+                    className={`${base.checkBtn} ${isChecked ? base.done : ""}`}
+                    onClick={() => onToggle(habit.id, weekKey)}
+                >
+                    {isChecked && "✓"}
+                </button>
 
-                {isEditing && (
+                {isEditing ? (
                     <div className={base.descriptionEditor}>
                         <textarea
                             value={desc}
                             onChange={(e) => setDesc(e.target.value)}
                             rows={3}
-                            placeholder="Описание привычки"
+                            className={base.descriptionInput}
+                            placeholder="Введите описание привычки..."
                         />
-                        <button onClick={saveDescription} className="btn btn-success btn-sm">Сохранить</button>
+                        <div className={base.editorButtons}>
+                            <button onClick={saveDescription} className={base.saveBtn}>Сохранить</button>
+                            <button onClick={() => setIsEditing(false)} className={base.cancelBtn}>Отмена</button>
+                        </div>
                     </div>
-                )}
+                ) : null}
             </div>
 
             {/* Стрелка (всегда показываем, даже если описание только планируется) */}

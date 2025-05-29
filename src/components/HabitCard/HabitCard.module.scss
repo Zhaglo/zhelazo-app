@@ -96,6 +96,62 @@
 /* описание */
 .descriptionEditor {
   margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.descriptionInput {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 70px;
+  transition: border 0.2s ease;
+}
+
+.descriptionInput:focus {
+  border-color: var(--color);
+  outline: none;
+}
+
+.editorButtons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.saveBtn {
+  background: var(--color);
+  color: #fff;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.saveBtn:hover {
+  background: #0884cc;
+}
+
+.cancelBtn {
+  background: #f2f2f2;
+  color: #555;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cancelBtn:hover {
+  background: #e0e0e0;
 }
 
 .descriptionWrapper {
@@ -103,7 +159,8 @@
   transition: max-height 0.4s ease;
   max-height: 0;
 }
-.descriptionWrapper.open {
+.descriptionWrapper.open,
+.descriptionWrapper.editing {
   max-height: 300px;
 }
 

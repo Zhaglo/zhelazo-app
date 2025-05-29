@@ -64,17 +64,21 @@ const DailyCard = ({ habit, onToggle, onDelete, today }: DailyCardProps) => {
                     {doneToday && "✓"}
                 </button>
 
-                {isEditing && (
+                {isEditing ? (
                     <div className={base.descriptionEditor}>
                         <textarea
                             value={desc}
                             onChange={(e) => setDesc(e.target.value)}
                             rows={3}
-                            placeholder="Описание привычки"
+                            className={base.descriptionInput}
+                            placeholder="Введите описание привычки..."
                         />
-                        <button onClick={saveDescription} className="btn btn-success btn-sm">Сохранить</button>
+                        <div className={base.editorButtons}>
+                            <button onClick={saveDescription} className={base.saveBtn}>Сохранить</button>
+                            <button onClick={() => setIsEditing(false)} className={base.cancelBtn}>Отмена</button>
+                        </div>
                     </div>
-                )}
+                ) : null}
             </div>
 
             {(habit.description || habit.createdAt || isEditing) && (

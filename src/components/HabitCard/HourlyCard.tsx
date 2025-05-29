@@ -103,19 +103,23 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
                 </div>
 
                 {isEditing && (
-                    <div className={base.descriptionEditor}>
+                    <div className={`${base.descriptionEditor} ${styles.hourlyDescriptionEditor}`}>
                         <textarea
                             value={desc}
                             onChange={(e) => setDesc(e.target.value)}
                             rows={3}
-                            placeholder="Описание привычки"
+                            className={`${base.descriptionInput} ${styles.hourlyDescriptionInput}`}
+                            placeholder="Введите описание привычки..."
                         />
-                        <button onClick={saveDescription} className="btn btn-success btn-sm">Сохранить</button>
+                        <div className={`${base.editorButtons} ${styles.hourlyEditorButtons}`}>
+                            <button onClick={saveDescription} className={base.saveBtn}>Сохранить</button>
+                            <button onClick={() => setIsEditing(false)} className={base.cancelBtn}>Отмена</button>
+                        </div>
                     </div>
                 )}
             </div>
 
-            {!isEditing && (habit.description || habit.createdAt) && (
+            {(habit.description || habit.createdAt || isEditing) && (
                 <>
                     <div
                         className={`${base.slideTrigger} ${showDescription ? base.open : ""}`}
@@ -126,8 +130,8 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
 
                     <div className={`${base.descriptionWrapper} ${showDescription ? base.open : ""}`}>
                         <div className={base.slideContent}>
-                            {habit.description && <p>{habit.description}</p>}
-                            {habit.createdAt && (
+                            {!isEditing && habit.description && <p>{habit.description}</p>}
+                            {!isEditing && habit.createdAt && (
                                 <p className={base.createdAt}>Создано: {habit.createdAt}</p>
                             )}
                         </div>
