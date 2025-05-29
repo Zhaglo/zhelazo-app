@@ -52,7 +52,7 @@ const DailyCard = ({ habit, onToggle, onDelete, today }: DailyCardProps) => {
                     </div>
                 </div>
 
-                <div className={styles.meta}>
+                <div className={styles.bottomInfo}>
                     <span>Дней подряд: {streak}</span>
                 </div>
 

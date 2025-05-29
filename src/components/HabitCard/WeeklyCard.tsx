@@ -49,7 +49,7 @@ const WeeklyCard = ({ habit, onToggle, onDelete, weekKey }: WeeklyCardProps) => 
                     </div>
                 </div>
 
-                <div className={styles.meta}>
+                <div className={styles.bottomInfo}>
                     <span>Недель подряд: {totalDone}</span>
                 </div>
 
