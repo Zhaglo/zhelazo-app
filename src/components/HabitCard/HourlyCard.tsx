@@ -3,13 +3,15 @@ import base from "./HabitCard.module.scss";
 import styles from "./HourlyCard.module.scss";
 import { HourlyCardProps } from "../../types/props";
 
-const generateHours = (from: string, to: string): string[] => {
+const generateIntervalHours = (from: string, to: string, step: number = 1): string[] => {
     const result: string[] = [];
     const start = parseInt(from.split(":")[0]);
     const end = parseInt(to.split(":")[0]);
-    for (let h = start; h <= end; h++) {
+
+    for (let h = start; h <= end; h += step) {
         result.push(h.toString().padStart(2, "0") + ":00");
     }
+
     return result;
 };
 
@@ -19,9 +21,17 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
     const [isEditing, setIsEditing] = useState(false);
     const [desc, setDesc] = useState(habit.description || "");
 
-    const hours = habit.timeRange ? generateHours(habit.timeRange.from, habit.timeRange.to) : [];
+    const timeRange = habit.timeRange;
+    const hours = timeRange
+        ? generateIntervalHours(
+            timeRange.from,
+            timeRange.to,
+            timeRange.interval || 1
+        )
+        : [];
+
     const doneHours = hours.filter((hour) => habit.days?.[`${today}_${hour}`]);
-    const pct = Math.round((doneHours.length / hours.length) * 100);
+    const pct = hours.length > 0 ? Math.round((doneHours.length / hours.length) * 100) : 0;
     const angleStep = 360 / hours.length;
 
     const toggleHour = (hour: string) => {
@@ -61,7 +71,7 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
                 <div className={base.header}>
                     <h3 className={base.title}>{habit.title}</h3>
                     <div style={{ display: "flex", gap: "0.5rem" }}>
-                        <button className={base.edit} onClick={() => setIsEditing(p => !p)} title="Редактировать">✏️</button>
+                        <button className={base.edit} onClick={() => setIsEditing((p) => !p)} title="Редактировать">✏️</button>
                         <button className={base.delete} onClick={() => onDelete(habit.id)} title="Удалить">🗑</button>
                     </div>
                 </div>
@@ -119,25 +129,25 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
                 )}
             </div>
 
-                {(habit.description || habit.createdAt || isEditing) && (
-                    <>
-                        <div
-                            className={`${base.slideTrigger} ${showDescription ? base.open : ""}`}
-                            onClick={() => setShowDescription((p) => !p)}
-                        >
-                            <div className={base.slideArrow}></div>
-                        </div>
+            {(habit.description || habit.createdAt || isEditing) && (
+                <>
+                    <div
+                        className={`${base.slideTrigger} ${showDescription ? base.open : ""}`}
+                        onClick={() => setShowDescription((p) => !p)}
+                    >
+                        <div className={base.slideArrow}></div>
+                    </div>
 
-                        <div className={`${base.descriptionWrapper} ${showDescription ? base.open : ""}`}>
-                            <div className={base.slideContent}>
-                                {habit.description && <p>{habit.description}</p>}
-                                {habit.createdAt && (
-                                    <p className={base.createdAt}>Создано: {habit.createdAt}</p>
-                                )}
-                            </div>
+                    <div className={`${base.descriptionWrapper} ${showDescription ? base.open : ""}`}>
+                        <div className={base.slideContent}>
+                            {habit.description && <p>{habit.description}</p>}
+                            {habit.createdAt && (
+                                <p className={base.createdAt}>Создано: {habit.createdAt}</p>
+                            )}
                         </div>
-                    </>
-                )}
+                    </div>
+                </>
+            )}
         </div>
     );
 };

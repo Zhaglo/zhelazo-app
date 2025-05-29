@@ -93,3 +93,17 @@ button[type="button"] {
 .colorDot.selected {
   border-color: #333;
 }
+
+.intervalPicker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+
+  select {
+    font-size: 1rem;
+    padding: 0.2rem 0.4rem;
+    width: 6ch; // ширина под одну-две цифры
+    text-align: center;
+  }
+}

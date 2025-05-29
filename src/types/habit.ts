@@ -3,6 +3,7 @@ export type Frequency = "daily" | "hourly" | "weekly";
 export interface TimeRange {
     from: string;
     to: string;
+    interval?: number;
 }
 
 export interface Habit {

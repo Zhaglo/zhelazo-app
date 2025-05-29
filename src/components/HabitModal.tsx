@@ -8,6 +8,9 @@ const HabitModal = ({ onClose, onAddHabit }: HabitModalProps) => {
     const [frequency, setFrequency] = useState<Frequency>("daily");
     const [color, setColor] = useState("#3aaee0");
     const [description, setDescription] = useState("");
+    const [timeFrom, setTimeFrom] = useState("08:00");
+    const [timeTo, setTimeTo] = useState("20:00");
+    const [interval, setInterval] = useState(1);
     const modalRef = useRef<HTMLDivElement>(null);
 
     const colors = [
@@ -20,15 +23,18 @@ const HabitModal = ({ onClose, onAddHabit }: HabitModalProps) => {
     const handleSubmit = (e: React.FormEvent | KeyboardEvent) => {
         e.preventDefault?.();
         if (!title.trim()) return;
-        onAddHabit(title.trim(), color, frequency, description.trim() || undefined);
+
+        const timeRange = frequency === "hourly"
+            ? { from: timeFrom, to: timeTo, interval }
+            : undefined;
+
+        onAddHabit(title.trim(), color, frequency, description.trim() || undefined, timeRange);
         onClose();
     };
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === "Escape") {
-                onClose();
-            }
+            if (e.key === "Escape") onClose();
             if (e.key === "Enter" && (e.target as HTMLElement).tagName !== "TEXTAREA") {
                 handleSubmit(e);
             }
@@ -47,7 +53,7 @@ const HabitModal = ({ onClose, onAddHabit }: HabitModalProps) => {
             document.removeEventListener("keydown", handleKeyDown);
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [title, color, frequency, description]);
+    }, [title, color, frequency, description, timeFrom, timeTo, interval]);
 
     return (
         <div className={styles.overlay}>
@@ -67,6 +73,28 @@ const HabitModal = ({ onClose, onAddHabit }: HabitModalProps) => {
                             <option value="weekly">Раз в неделю</option>
                         </select>
                     </label>
+
+                    {frequency === "hourly" && (
+                        <div className={styles.timeRange}>
+                            <label>
+                                С:
+                                <input type="time" value={timeFrom} onChange={(e) => setTimeFrom(e.target.value)} />
+                            </label>
+                            <label>
+                                До:
+                                <input type="time" value={timeTo} onChange={(e) => setTimeTo(e.target.value)} />
+                            </label>
+                            <div className={styles.intervalPicker}>
+                                <span>Каждые</span>
+                                <select value={interval} onChange={(e) => setInterval(Number(e.target.value))}>
+                                    {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => (
+                                        <option key={n} value={n}>{n}</option>
+                                    ))}
+                                </select>
+                                <span>часа</span>
+                            </div>
+                        </div>
+                    )}
 
                     <label>
                         Цвет:
