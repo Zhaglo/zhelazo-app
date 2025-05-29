@@ -104,12 +104,6 @@ const DashboardPage = () => {
 
     return (
         <div className={styles.wrapper}>
-            <h2 className={styles.title}>Ваши привычки на {today}</h2>
-
-            <button className={styles.addBtn} onClick={() => setShowModal(true)}>
-                ➕ Добавить привычку
-            </button>
-
             {showModal && (
                 <HabitModal
                     onClose={() => setShowModal(false)}
@@ -125,7 +119,7 @@ const DashboardPage = () => {
             ) : (
                 <>
                     {dailyHabits.length > 0 && (
-                        <>
+                        <section className={styles.section}>
                             <h3 className={styles.sectionTitle}>Ежедневные привычки</h3>
                             <div className={styles.grid}>
                                 {dailyHabits.map((habit) => (
@@ -139,11 +133,11 @@ const DashboardPage = () => {
                                     />
                                 ))}
                             </div>
-                        </>
+                        </section>
                     )}
 
                     {hourlyHabits.length > 0 && (
-                        <>
+                        <section className={styles.section}>
                             <h3 className={styles.sectionTitle}>Ежечасные привычки</h3>
                             <div className={styles.grid}>
                                 {hourlyHabits.map((habit) => (
@@ -157,11 +151,11 @@ const DashboardPage = () => {
                                     />
                                 ))}
                             </div>
-                        </>
+                        </section>
                     )}
 
                     {weeklyHabits.length > 0 && (
-                        <>
+                        <section className={styles.section}>
                             <h3 className={styles.sectionTitle}>Еженедельные привычки</h3>
                             <div className={styles.grid}>
                                 {weeklyHabits.map((habit) => (
@@ -175,10 +169,15 @@ const DashboardPage = () => {
                                     />
                                 ))}
                             </div>
-                        </>
+                        </section>
                     )}
                 </>
             )}
+
+            <button className={styles.floatingButton} onClick={() => setShowModal(true)}>
+                <span className={styles.plus}>+</span>
+                Добавить привычку
+            </button>
         </div>
     );
 };
