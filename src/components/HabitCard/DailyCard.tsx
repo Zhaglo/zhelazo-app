@@ -47,7 +47,7 @@ const DailyCard = ({ habit, onToggle, onDelete, today }: DailyCardProps) => {
             <div className={base.content}>
                 <div className={base.header}>
                     <h3 className={base.title}>{habit.title}</h3>
-                    <div style={{ display: "flex", gap: "0.5rem" }}>
+                    <div className={base.actions}>
                         <button className={base.edit} onClick={() => setIsEditing(p => !p)} title="Редактировать">✏️</button>
                         <button className={base.delete} onClick={() => onDelete(habit.id)} title="Удалить">🗑</button>
                     </div>
