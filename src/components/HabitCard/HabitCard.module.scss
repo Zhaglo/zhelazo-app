@@ -1,98 +1,269 @@
+/* ───────── карточка ───────── */
 .card {
-  display: flex;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-  overflow: hidden;
-  width: 280px;
-  transition: transform 0.2s ease;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  min-width: 300px;
+  max-width: 300px;
+  overflow: visible;
+  background: #fff;
+  border: 1px solid #eee;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+
+  &:hover {
+    transform: translateY(-5px) rotate(-0.4deg);
+  }
+
+  &.completed {
+    filter: grayscale(0.35) opacity(0.7);
+    box-shadow: none;
+  }
 }
 
-.card:hover {
-  transform: translateY(-4px);
+.card.expanded {
+  z-index: 2;
 }
 
 .colorStripe {
   width: 6px;
-  background-color: #ccc;
+  background: var(--color);
 }
 
 .content {
-  flex: 1;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  position: relative;
+  padding: 1.25rem 1.5rem 4.5rem;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
 }
 
 .title {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.3rem;
+  font-weight: 700;
   margin: 0;
-  word-break: break-word;
 }
 
-.delete {
-  background: none;
+.delete,
+.edit {
   border: none;
-  font-size: 1rem;
-  color: #999;
+  background: none;
   cursor: pointer;
+  font-size: 1.05rem;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s;
 }
 
-.card:hover .delete {
-  opacity: 1;
+.card:hover .delete,
+.card:hover .edit {
+  opacity: 0.7;
 }
 
 .meta {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.85rem;
+  margin: 0.5rem 0 1rem;
+  font-size: 0.9rem;
   color: #666;
-}
-
-.checkbox {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.95rem;
-  cursor: pointer;
-
-  input[type="checkbox"] {
-    accent-color: #28a745;
-    width: 1rem;
-    height: 1rem;
-  }
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .frequency {
-  font-size: 0.85rem;
-  color: #333;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
 }
 
-.hourlyList {
+.checkBtn {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  background: #f3f3f3;
+  color: #fff;
+  transition: background 0.25s;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.checkBtn.done {
+  background: var(--color);
+}
+
+/* описание */
+.descriptionEditor {
+  margin-top: 0.75rem;
+}
+
+/* выезжающее описание */
+.slideWrapper {
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  max-height: 40px;
+}
+.slideWrapper.open {
+  max-height: 300px; /* регулируй по содержанию */
+}
+
+.descriptionWrapper {
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  max-height: 0;
+}
+
+.descriptionWrapper.open {
+  max-height: 300px;
+}
+
+.slideTrigger {
+  position: relative;
+  height: 10px;
+  background: var(--color);
+  cursor: pointer;
+  overflow: hidden;
+
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+.slideTrigger.open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.slideArrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #fff;
+  pointer-events: none;
+}
+
+.slideContent {
+  background: #f9f9f9;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: #444;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* недельные точки */
+.weekRow {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+  margin-top: -0.5rem;
+}
+.filledDot,
+.emptyDot {
+  flex-grow: 1;
+  height: 16px;
+  border-radius: 50%;
+}
+.filledDot {
+  background-color: var(--color);
+}
+.emptyDot {
+  background-color: #ddd;
+}
+
+/* часовой круг */
+.hourCircle {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 1rem auto;
+}
+.hourDot {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #eee;
+  border: none;
+  font-weight: bold;
+  color: #444;
+  transform: translate(-50%, -50%);
+  transition: background 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.hourDot.done {
+  background: var(--color);
+  color: white;
+}
+.hourCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #222;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+.hourCenter:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.weekProgressWrapper {
+  padding: 20px 16px 0;
+  margin-bottom: 0.75rem;
+}
+.weekProgress {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+}
+.weekDot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  flex-shrink: 0;
+}
+.weekDot.filled {
+  background: var(--color, #3aaee0);
+}
+
+.slideContent .createdAt {
+  font-size: 0.85rem;
+  color: #888;
   margin-top: 0.5rem;
 }
 
-.hourCheckbox {
-  font-size: 0.85rem;
+.streakRow {
   display: flex;
-  align-items: center;
-  gap: 0.3rem;
-
-  input {
-    accent-color: #28a745;
-  }
+  justify-content: space-between;
+  padding: 20px 16px 0;
+  margin-bottom: 0.75rem;
+  gap: 6px;
 }

@@ -14,4 +14,5 @@ export interface Habit {
     userId: string;
     frequency: Frequency;
     timeRange?: TimeRange;
+    description?: string;
 }

@@ -20,6 +20,10 @@
   gap: 1rem;
   justify-content: center;
   margin-top: 2rem;
+
+  > * {
+    align-self: flex-start; /* 💡 это отключает выравнивание по наивысшей карточке */
+  }
 }
 
 .sectionTitle {

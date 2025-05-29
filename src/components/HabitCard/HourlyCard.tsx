@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "./HabitCard.module.scss";
 import { HourlyCardProps } from "../../types/props";
 
@@ -11,119 +12,84 @@ const generateHours = (from: string, to: string): string[] => {
     return result;
 };
 
-const getHourlyStreak = (habit: HourlyCardProps["habit"]): number => {
-    if (!habit.timeRange) return 0;
-
-    const allDates = Object.keys(habit.days || {})
-        .map((key) => key.split("_")[0])
-        .filter((v, i, a) => a.indexOf(v) === i); // уникальные даты
-
-    const sorted = allDates.sort((a, b) => {
-        const [d1, m1, y1] = a.split(".").map(Number);
-        const [d2, m2, y2] = b.split(".").map(Number);
-        return new Date(y1, m1 - 1, d1).getTime() - new Date(y2, m2 - 1, d2).getTime();
-    });
-
-    let max = 0;
-    let current = 0;
-    let lastDate: Date | null = null;
-
-    for (const dateStr of sorted) {
-        const hours = generateHours(habit.timeRange.from, habit.timeRange.to);
-        const allMarked = hours.every((hour) => habit.days?.[`${dateStr}_${hour}`]);
-
-        const [d, m, y] = dateStr.split(".").map(Number);
-        const date = new Date(y, m - 1, d);
-
-        if (allMarked) {
-            if (lastDate && (date.getTime() - lastDate.getTime()) / (1000 * 3600 * 24) === 1) {
-                current++;
-            } else {
-                current = 1;
-            }
-
-            max = Math.max(max, current);
-            lastDate = date;
-        } else {
-            current = 0;
-        }
-    }
-
-    return max;
-};
-
 const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
-    const isAllHoursChecked = () => {
-        if (!habit.timeRange) return false;
-        const hours = generateHours(habit.timeRange.from, habit.timeRange.to);
-        return hours.every((hour) => habit.days?.[`${today}_${hour}`]);
+    const [hoveringCenter, setHoveringCenter] = useState(false);
+
+    const hours = habit.timeRange ? generateHours(habit.timeRange.from, habit.timeRange.to) : [];
+    const doneHours = hours.filter((hour) => habit.days?.[`${today}_${hour}`]);
+    const pct = Math.round((doneHours.length / hours.length) * 100);
+
+    const toggleHour = (hour: string) => {
+        const key = `${today}_${hour}`;
+        onToggle(habit.id, key);
     };
 
-    const handleToggleAll = () => {
-        if (!habit.timeRange) return;
-        const hours = generateHours(habit.timeRange.from, habit.timeRange.to);
-        const shouldMarkAll = !isAllHoursChecked();
+    const toggleAll = () => {
+        const markAll = doneHours.length !== hours.length;
         hours.forEach((hour) => {
             const key = `${today}_${hour}`;
-            const current = habit.days?.[key] || false;
-            if (current !== shouldMarkAll) {
+            const current = !!habit.days?.[key];
+            if (current !== markAll) {
                 onToggle(habit.id, key);
             }
         });
     };
 
-    const streak = getHourlyStreak(habit);
+    const angleStep = 360 / hours.length;
 
     return (
-        <div className={styles.card}>
-            <div className={styles.colorStripe} style={{ backgroundColor: habit.color }} />
+        <div
+            className={`${styles.card} ${doneHours.length === hours.length ? styles.completed : ""}`}
+            style={{ ["--color" as any]: habit.color }}
+        >
+            <div className={styles.colorStripe} />
             <div className={styles.content}>
                 <div className={styles.header}>
                     <h3 className={styles.title}>{habit.title}</h3>
-                    <button className={styles.delete} onClick={() => onDelete(habit.id)}>
-                        🗑
-                    </button>
+                    <button className={styles.delete} onClick={() => onDelete(habit.id)}>🗑</button>
                 </div>
 
                 <div className={styles.meta}>
                     <span>Создано: {habit.createdAt}</span>
-                    <span>Дней подряд: {streak}</span>
+                    <span>Выполнено: {doneHours.length}/{hours.length}</span>
                 </div>
 
-                {habit.timeRange && (
-                    <>
-                        <div className={styles.frequency}>
-                            Каждый час: {habit.timeRange.from} – {habit.timeRange.to}
-                        </div>
+                <div className={styles.hourCircle}>
+                    {hours.map((hour, i) => {
+                        const key = `${today}_${hour}`;
+                        const isChecked = habit.days?.[key] || false;
 
-                        <div className={styles.hourlyList}>
-                            {generateHours(habit.timeRange.from, habit.timeRange.to).map((hour) => {
-                                const key = `${today}_${hour}`;
-                                const checked = habit.days?.[key] || false;
+                        const angle = angleStep * i - 90;
+                        const x = 110 + 90 * Math.cos((angle * Math.PI) / 180);
+                        const y = 110 + 90 * Math.sin((angle * Math.PI) / 180);
 
-                                return (
-                                    <label key={hour} className={styles.hourCheckbox}>
-                                        <input
-                                            type="checkbox"
-                                            checked={checked}
-                                            onChange={() => onToggle(habit.id, key)}
-                                        />
-                                        {hour}
-                                    </label>
-                                );
-                            })}
-                        </div>
-                    </>
-                )}
+                        return (
+                            <button
+                                key={hour}
+                                title={hour}
+                                className={`${styles.hourDot} ${isChecked ? styles.done : ""}`}
+                                onClick={() => toggleHour(hour)}
+                                style={{ left: `${x}px`, top: `${y}px` }}
+                            >
+                                {hour.slice(0, 2)}
+                            </button>
+                        );
+                    })}
 
-                <label className={styles.checkbox}>
-                    <input
-                        type="checkbox"
-                        checked={isAllHoursChecked()}
-                        onChange={handleToggleAll}
-                    />
-                    <span>Отметить на сегодня</span>
-                </label>
+                    <div
+                        className={styles.hourCenter}
+                        onMouseEnter={() => setHoveringCenter(true)}
+                        onMouseLeave={() => setHoveringCenter(false)}
+                        onClick={toggleAll}
+                        title={
+                            pct === 100
+                                ? "Сбросить все часы"
+                                : "Отметить все часы"
+                        }
+                    >
+                        {hoveringCenter ? (pct === 100 ? "✕" : "✓") : `${pct}%`}
+                    </div>
+                </div>
             </div>
         </div>
     );

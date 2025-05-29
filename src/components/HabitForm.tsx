@@ -41,7 +41,7 @@ const HabitForm: React.FC<HabitFormProps> = ({ onAddHabit }) => {
             <select value={frequency} onChange={(e) => setFrequency(e.target.value as Frequency)}>
                 <option value="daily">Ежедневно</option>
                 <option value="hourly">Ежечасно</option>
-                <option value="weekly">Раз в неделю</option>
+                <option value="weekly">Еженедельно</option>
             </select>
             {frequency === "hourly" && (
                 <>
