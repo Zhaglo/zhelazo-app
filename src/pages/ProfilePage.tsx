@@ -13,14 +13,12 @@ interface UserProfile {
 const ProfilePage = () => {
     const userId = localStorage.getItem("token");
 
-    // Привычки юзера
     const allHabits: Habit[] = JSON.parse(localStorage.getItem("habits") || "[]");
     const userHabits = allHabits.filter(h => h.userId === userId);
 
-    // Профиль юзера
     const rawProfile = JSON.parse(localStorage.getItem(`userProfile_${userId}`) || "{}");
 
-    const userProfile: UserProfile = {
+    const initialProfile: UserProfile = {
         avatar: rawProfile.avatar || "😈",
         name: rawProfile.name || "Игорь",
         tag: rawProfile.tag || "@frontend_god_69",
@@ -28,12 +26,16 @@ const ProfilePage = () => {
         registered: rawProfile.registered || "март 2025",
     };
 
-    // Стейт
+    const [userProfile, setUserProfile] = useState<UserProfile>(initialProfile);
+
+    // Модалка
+    const [showModal, setShowModal] = useState(false);
+    const [editProfile, setEditProfile] = useState<UserProfile>(initialProfile);
+
     const [habitsCount, setHabitsCount] = useState(0);
     const [totalStreak, setTotalStreak] = useState(0);
     const [bestHabit, setBestHabit] = useState("—");
 
-    // Подсчет стрика одной привычки
     const calcHabitStreak = (habit: Habit): number => {
         const days = habit.days || {};
         const dates = Object.entries(days)
@@ -67,7 +69,6 @@ const ProfilePage = () => {
         return max;
     };
 
-    // useEffect
     useEffect(() => {
         setHabitsCount(userHabits.length);
 
@@ -86,7 +87,6 @@ const ProfilePage = () => {
         setBestHabit(best);
     }, [userHabits]);
 
-    // Ачивки
     const getAchievements = (): { icon: string; label: string }[] => {
         const achs = [];
 
@@ -102,7 +102,6 @@ const ProfilePage = () => {
             achs.push({ icon: "⭐", label: "50 дней стабильности" });
         }
 
-        // Прогресс
         const progressKey = `userProgress_${userId}`;
         const currentProgress = JSON.parse(localStorage.getItem(progressKey) || "{}");
         const motivationVisits = currentProgress.motivationVisits || 0;
@@ -120,7 +119,13 @@ const ProfilePage = () => {
         return achs;
     };
 
-    // JSX
+    // Сохранение
+    const handleSaveProfile = () => {
+        setUserProfile(editProfile);
+        localStorage.setItem(`userProfile_${userId}`, JSON.stringify(editProfile));
+        setShowModal(false);
+    };
+
     return (
         <div className={styles.wrapper}>
             <h2 className={styles.pageTitle}>👤 Профиль пользователя</h2>
@@ -164,9 +169,76 @@ const ProfilePage = () => {
 
                 {/* Кнопка */}
                 <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
-                    <button className={styles.editButton}>✏️ Редактировать профиль</button>
+                    <button
+                        className={styles.editButton}
+                        onClick={() => {
+                            setEditProfile(userProfile);
+                            setShowModal(true);
+                        }}
+                    >
+                        ✏️ Редактировать профиль
+                    </button>
                 </div>
             </div>
+
+            {/* Модалка */}
+            {showModal && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <h3>✏️ Редактировать профиль</h3>
+
+                        <label>
+                            Аватар (эмодзи):
+                            <input
+                                type="text"
+                                maxLength={2}
+                                value={editProfile.avatar}
+                                onChange={(e) => setEditProfile({ ...editProfile, avatar: e.target.value })}
+                            />
+                        </label>
+
+                        <label>
+                            Имя:
+                            <input
+                                type="text"
+                                value={editProfile.name}
+                                onChange={(e) => setEditProfile({ ...editProfile, name: e.target.value })}
+                            />
+                        </label>
+
+                        <label>
+                            Тег:
+                            <input
+                                type="text"
+                                value={editProfile.tag}
+                                onChange={(e) => setEditProfile({ ...editProfile, tag: e.target.value })}
+                            />
+                        </label>
+
+                        <label>
+                            Email:
+                            <input
+                                type="email"
+                                value={editProfile.email}
+                                onChange={(e) => setEditProfile({ ...editProfile, email: e.target.value })}
+                            />
+                        </label>
+
+                        <div style={{ marginTop: "1rem", textAlign: "center" }}>
+                            <button className={styles.editButton} onClick={handleSaveProfile}>
+                                ✅ Сохранить
+                            </button>
+                            <button
+                                className={styles.editButton}
+                                style={{ marginLeft: "1rem", backgroundColor: "#ddd", color: "#333" }}
+                                onClick={() => setShowModal(false)}
+                            >
+                                ❌ Отмена
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
