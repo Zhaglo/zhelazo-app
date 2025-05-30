@@ -1,62 +1,83 @@
-import QuoteCard from "../components/QuoteCard";
-
-const fakeAchievements = [
-    {
-        user: "Алина",
-        habit: "Утренняя зарядка",
-        streak: 45,
-        color: "#ff7f50",
-    },
-    {
-        user: "Михаил",
-        habit: "Чтение каждый день",
-        streak: 30,
-        color: "#4caf50",
-    },
-    {
-        user: "Катя",
-        habit: "Пить воду",
-        streak: 60,
-        color: "#2196f3",
-    },
-];
-
-const motivationalQuotes = [
-    "Твои привычки формируют твою судьбу.",
-    "Сила — в регулярности.",
-    "Сегодня ты — лучше, чем вчера.",
-];
+import styles from "./MotivationPage.module.scss";
+import { useState, useEffect } from "react";
+import { users, quotes, stathamQuotes } from "../data/motivationData";
 
 const MotivationPage = () => {
+    const sortedUsers = [...users].sort((a, b) => b.streak - a.streak);
+
+    const TOP_LIMIT = 20; // например, показываем только 12 пользователей
+
+    const topUsers = sortedUsers.slice(0, TOP_LIMIT);
+
+    const getMedal = (index: number, streak: number): string => {
+        if (index === 0) return "🥇";
+        if (index === 1) return "🥈";
+        if (index === 2) return "🥉";
+        if (streak >= 100) return "🏆";
+        if (streak >= 50) return "⭐️";
+        if (streak >= 30) return "🎖️";
+        return "💪";
+    };
+
+    const [quoteOfDay, setQuoteOfDay] = useState("");
+    const [stathamQuote, setStathamQuote] = useState("");
+
+    useEffect(() => {
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        const randomStatham = stathamQuotes[Math.floor(Math.random() * stathamQuotes.length)];
+
+        setQuoteOfDay(randomQuote);
+        setStathamQuote(randomStatham);
+    }, []);
+
     return (
-        <div>
-            <h2>Мотивация</h2>
+        <div className={styles.pageContainer}>
 
-            <ul style={{ listStyle: "none", padding: 0 }}>
-                {fakeAchievements.map((item, i) => (
-                    <li
-                        key={i}
-                        style={{
-                            borderLeft: `8px solid ${item.color}`,
-                            padding: "12px",
-                            marginBottom: "12px",
-                            background: "#f9f9f9",
-                            borderRadius: "6px",
-                        }}
-                    >
-                        <strong>{item.user}</strong> поддерживает привычку <em>"{item.habit}"</em> уже{" "}
-                        <strong>{item.streak} дней подряд</strong> 💪
-                    </li>
-                ))}
-            </ul>
+            <div className={styles.motivationBlock}>
+                <h2>📌 Полезная информация</h2>
 
-            <hr />
+                <div className={styles.quoteGrid}>
+                    <div className={styles.quoteBlock}>
+                        <h3>📝 Цитата дня</h3>
+                        <blockquote>"{quoteOfDay}"</blockquote>
+                    </div>
 
-            <div style={{ marginTop: "2rem" }}>
-                <h3>Цитата дня:</h3>
-                <p style={{ fontStyle: "italic", fontSize: "1.1rem" }}>
-                    <QuoteCard text={motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)]} />
-                </p>
+                    <div className={styles.stathamBlock}>
+                        <h3>🐺 Цитата Джейсона Стетхэма</h3>
+                        <blockquote>"{stathamQuote}"</blockquote>
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.topSection}>
+                <h3 className={styles.sectionTitle}>🏆 ТОП-20 пользователей по стрикам</h3>
+
+                <div className={styles.topGrid}>
+                    {topUsers.map((user, index) => (
+                        <div key={user.tag} className={styles.topCard}>
+                            <div className={styles.topHeader}>
+                                <span className={styles.avatar}>{user.emoji}</span>
+                                <div>
+                                    <strong>{user.name}</strong>
+                                    <div className={styles.userTag}>{user.tag}</div>
+                                </div>
+                                <div className={styles.medal}>{getMedal(index, user.streak)}</div>
+                            </div>
+
+                            <div className={styles.topHabit}>
+                                <em>"{user.habit}"</em>
+                            </div>
+
+                            <div className={styles.streak}>
+                                🔥 {user.streak} дней подряд
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className={styles.footerNote}>
+                🚀 Ты тоже можешь попасть в ТОП — прокачивай свои привычки каждый день!
             </div>
         </div>
     );

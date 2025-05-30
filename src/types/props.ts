@@ -30,3 +30,12 @@ export interface HabitModalProps {
         timeRange?: TimeRange
     ) => void;
 }
+
+export interface MotivationCardProps {
+    user: string;
+    username: string;
+    avatar?: string;
+    habit: string;
+    streak: number;
+    target?: number;
+}
