@@ -139,16 +139,22 @@ const StatsPage = () => {
 
     const bestStreak = Math.max(...habits.map(maxStreak), 0);
 
+    const sortedHabits = [...habits].sort((a, b) => {
+        const aCount = countHabitCompletions(a);
+        const bCount = countHabitCompletions(b);
+        return bCount - aCount;  // по убыванию
+    });
+
     // 👉 График "по привычкам"
     const chartData = {
-        labels: habits.map((h) =>
+        labels: sortedHabits.map((h) =>
             h.title.length > 15 ? h.title.slice(0, 15) + "…" : h.title
         ),
         datasets: [
             {
                 label: "Количество выполнений",
-                data: habits.map((h) => countHabitCompletions(h)),
-                backgroundColor: habits.map((h) => h.color),
+                data: sortedHabits.map((h) => countHabitCompletions(h)),
+                backgroundColor: sortedHabits.map((h) => h.color),
                 borderRadius: 8,
             },
         ],
@@ -259,7 +265,7 @@ const StatsPage = () => {
             <div className={styles.statsGrid}>
                 <StatsBlock label="Всего привычек" value={totalHabits} />
                 <StatsBlock label="Всего выполнений" value={totalCompletions} />
-                <StatsBlock label="Максимальный стрик" value={`${bestStreak} дней подряд`} />
+                <StatsBlock label="Максимальный стрик" value={`${bestStreak} дней подряд🔥`} />
             </div>
 
             {habits.length > 0 && (
