@@ -12,7 +12,7 @@ export const users = [
     { name: "Виктория", tag: "@dictionary_dominator", emoji: "📚", habit: "Учить новое слово каждый день", streak: 55 },
     { name: "Артур", tag: "@six_string_slayer", emoji: "🎸", habit: "Игра на гитаре", streak: 22 },
     { name: "Юлия", tag: "@chiropractor_queen", emoji: "🦴", habit: "Зарядка для спины", streak: 28 },
-    { name: "Алексей", tag: "@mind_gym_brat", emoji: "🏋️‍♂️", habit: "Саморазвитие", streak: 33 },
+    { name: "Тимофей", tag: "@gym_snus_brat61", emoji: "🏋️‍♂️", habit: "Саморазвитие", streak: 33 },
     { name: "Наталья", tag: "@oven_overlord", emoji: "🔥", habit: "Пробовать новые рецепты", streak: 17 },
     { name: "Игорь", tag: "@frontend_god_69", emoji: "😈", habit: "Писать курсовую по Фронтенду", streak: 101 },
     { name: "Андрей", tag: "@math_cocaine", emoji: "➕", habit: "Изучать математику", streak: 42 },
