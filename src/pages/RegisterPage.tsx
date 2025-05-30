@@ -11,6 +11,7 @@ const RegisterPage = () => {
 
     const [formData, setFormData] = useState({
         username: "",
+        tag: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -19,6 +20,7 @@ const RegisterPage = () => {
     const [error, setError] = useState("");
     const [touched, setTouched] = useState({
         username: false,
+        tag: false,
         email: false,
         password: false,
         confirmPassword: false,
@@ -36,14 +38,15 @@ const RegisterPage = () => {
         e.preventDefault();
         setTouched({
             username: true,
+            tag: true,
             email: true,
             password: true,
             confirmPassword: true,
         });
 
-        const { username, email, password, confirmPassword } = formData;
+        const { username, tag, email, password, confirmPassword } = formData;
 
-        if (!username || !isValidEmail(email) || !password || !confirmPassword) {
+        if (!username || !tag || !isValidEmail(email) || !password || !confirmPassword) {
             setError("Пожалуйста, заполните все поля корректно");
             return;
         }
@@ -62,9 +65,20 @@ const RegisterPage = () => {
             return;
         }
 
-        const newUser = { id: Date.now(), username, email, password };
+        const newUser = { id: Date.now(), username, tag, email, password };
         localStorage.setItem("users", JSON.stringify([...existingUsers, newUser]));
         localStorage.setItem("token", String(newUser.id));
+
+        const userProfile = {
+            avatar: "🙂", // по умолчанию
+            name: username,
+            tag: tag,
+            email: email,
+            registered: new Date().toLocaleString("ru-RU", { month: "long", year: "numeric" })
+        };
+
+        localStorage.setItem(`userProfile_${newUser.id}`, JSON.stringify(userProfile));
+
         navigate("/dashboard");
     };
 
@@ -91,6 +105,27 @@ const RegisterPage = () => {
                         }`}
                     >
                         Введите имя
+                    </div>
+                </div>
+
+                <div className={styles.formGroup}>
+                    <Input
+                        name="tag"
+                        placeholder="Тег (например @frontend_god_69)"
+                        value={formData.tag}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        required
+                        className={
+                            touched.tag && !formData.tag ? styles.inputError : ""
+                        }
+                    />
+                    <div
+                        className={`${styles.helperText} ${
+                            touched.tag && !formData.tag ? styles.visible : ""
+                        }`}
+                    >
+                        Введите тег
                     </div>
                 </div>
 

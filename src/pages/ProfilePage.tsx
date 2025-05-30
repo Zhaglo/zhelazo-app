@@ -1,23 +1,39 @@
 import styles from "./ProfilePage.module.scss";
 import { useEffect, useState } from "react";
-import {Habit} from "../types/habit";
+import { Habit } from "../types/habit";
+
+interface UserProfile {
+    avatar: string;
+    name: string;
+    tag: string;
+    email: string;
+    registered: string;
+}
 
 const ProfilePage = () => {
     const userId = localStorage.getItem("token");
 
-    // Подтягиваем привычки юзера
+    // Привычки юзера
     const allHabits: Habit[] = JSON.parse(localStorage.getItem("habits") || "[]");
     const userHabits = allHabits.filter(h => h.userId === userId);
 
-    // Подтягиваем профиль юзера (если вдруг сохранили при регистрации)
-    const userProfile = JSON.parse(localStorage.getItem("userProfile") || "{}");
+    // Профиль юзера
+    const rawProfile = JSON.parse(localStorage.getItem(`userProfile_${userId}`) || "{}");
 
-    // Стейт для анимации/обновления (можно убрать если не нужно)
+    const userProfile: UserProfile = {
+        avatar: rawProfile.avatar || "😈",
+        name: rawProfile.name || "Игорь",
+        tag: rawProfile.tag || "@frontend_god_69",
+        email: rawProfile.email || "igor@mail.com",
+        registered: rawProfile.registered || "март 2025",
+    };
+
+    // Стейт
     const [habitsCount, setHabitsCount] = useState(0);
     const [totalStreak, setTotalStreak] = useState(0);
     const [bestHabit, setBestHabit] = useState("—");
 
-    // Функция для подсчета стрика одной привычки (можно взять из StatsPage)
+    // Подсчет стрика одной привычки
     const calcHabitStreak = (habit: Habit): number => {
         const days = habit.days || {};
         const dates = Object.entries(days)
@@ -51,7 +67,7 @@ const ProfilePage = () => {
         return max;
     };
 
-    // При монтировании страницы — считаем
+    // useEffect
     useEffect(() => {
         setHabitsCount(userHabits.length);
 
@@ -70,23 +86,7 @@ const ProfilePage = () => {
         setBestHabit(best);
     }, [userHabits]);
 
-    // Заглушка user (если нет сохраненного профиля)
-    const user = {
-        avatar: userProfile.avatar || "😈",
-        name: userProfile.name || "Игорь",
-        tag: userProfile.tag || "@frontend_god_69",
-        email: userProfile.email || "igor@mail.com",
-        registered: userProfile.registered || "март 2025",
-    };
-
-    const achievements = [
-        { icon: "🏅", label: "100 дней без пропусков" },
-        { icon: "🏆", label: "Вошел в ТОП" },
-        { icon: "🔥", label: "Легендарный фронтендер" },
-        { icon: "🧘", label: "Залетал на мотивацию 5 раз" },
-    ];
-
-    // ⚡ Динамическое получение ачивок
+    // Ачивки
     const getAchievements = (): { icon: string; label: string }[] => {
         const achs = [];
 
@@ -102,7 +102,7 @@ const ProfilePage = () => {
             achs.push({ icon: "⭐", label: "50 дней стабильности" });
         }
 
-        // Прогресс из localStorage
+        // Прогресс
         const progressKey = `userProgress_${userId}`;
         const currentProgress = JSON.parse(localStorage.getItem(progressKey) || "{}");
         const motivationVisits = currentProgress.motivationVisits || 0;
@@ -113,7 +113,6 @@ const ProfilePage = () => {
             achs.push({ icon: "🧘", label: `Посещал мотивацию (${motivationVisits} раз)` });
         }
 
-        // Пример "Вошел в ТОП" — пусть будет привычка с стриком >= 60
         if (maxHabitStreak >= 60) {
             achs.push({ icon: "🏆", label: "Вошел в ТОП" });
         }
@@ -121,6 +120,7 @@ const ProfilePage = () => {
         return achs;
     };
 
+    // JSX
     return (
         <div className={styles.wrapper}>
             <h2 className={styles.pageTitle}>👤 Профиль пользователя</h2>
@@ -129,12 +129,12 @@ const ProfilePage = () => {
                 {/* Инфа */}
                 <div className={styles.profileCard}>
                     <div className={styles.profileHeader}>
-                        <span className={styles.profileAvatar}>{user.avatar}</span>
+                        <span className={styles.profileAvatar}>{userProfile.avatar}</span>
                         <div>
-                            <div className={styles.profileName}>{user.name}</div>
-                            <div className={styles.profileTag}>{user.tag}</div>
-                            <div className={styles.profileEmail}>📧 {user.email}</div>
-                            <div className={styles.profileRegistered}>🗓 С нами с: {user.registered}</div>
+                            <div className={styles.profileName}>{userProfile.name}</div>
+                            <div className={styles.profileTag}>{userProfile.tag}</div>
+                            <div className={styles.profileEmail}>📧 {userProfile.email}</div>
+                            <div className={styles.profileRegistered}>🗓 С нами с: {userProfile.registered}</div>
                         </div>
                     </div>
                 </div>
