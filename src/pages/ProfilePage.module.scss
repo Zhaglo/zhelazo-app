@@ -1,0 +1,164 @@
+/* === Профиль — обертка страницы === */
+.wrapper {
+  background-color: #f7f8fa;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* === Заголовок === */
+.pageTitle {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* === Большой блок профиля === */
+.profileBlock {
+  background: #fff;
+  border-radius: 14px;
+  padding: 2rem 3rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* === Карточка профиля === */
+.profileCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.profileCard h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 0; /* убираем пустой отступ сверху! */
+  margin-bottom: 1rem; /* нормальный отступ вниз */
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* === Хэдер (аватар + инфа) === */
+.profileHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.profileAvatar {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+
+.profileName {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.profileTag {
+  font-size: 1rem;
+  color: #777;
+}
+
+.profileEmail,
+.profileRegistered {
+  font-size: 0.95rem;
+  color: #444;
+  margin-top: 0.25rem;
+}
+
+/* === Секции === */
+.sectionTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* === Статистика === */
+.profileStats {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 2rem;
+  width: 100%;
+  padding-left: 3.5rem; /* ✅ добавляем отступ слева */
+
+  li {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+/* === Достижения === */
+.profileAchievements {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+
+  li {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.95rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  }
+}
+
+.achIcon {
+  font-size: 1.2rem;
+}
+
+/* === Кнопка редактировать === */
+.editButton {
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+  margin-top: 1rem;
+
+  &:hover {
+    background-color: #1565c0;
+  }
+}
