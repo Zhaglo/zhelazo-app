@@ -87,6 +87,32 @@ const countHabitCompletions = (habit: Habit): number => {
     return 0;
 };
 
+const getCompletionRate = (habit: Habit): number => {
+    const today = new Date();
+    const [createdDay, createdMonth, createdYear] = habit.createdAt.split(".").map(Number);
+    const createdDate = new Date(createdYear, createdMonth - 1, createdDay);
+
+    const diffInDays = Math.floor((today.getTime() - createdDate.getTime()) / (1000 * 3600 * 24)) + 1;
+
+    if (diffInDays <= 0) return 0;
+
+    if (habit.frequency === "daily" || habit.frequency === "hourly") {
+        const completions = countHabitCompletions(habit);
+        return Math.min(100, Math.round((completions / diffInDays) * 100));
+    }
+
+    if (habit.frequency === "weekly") {
+        const weeksPassed = Math.floor(diffInDays / 7) || 1;
+        const completions = Object.entries(habit.days || {})
+            .filter(([key, done]) => done && key.includes("W"))
+            .length;
+
+        return Math.min(100, Math.round((completions / weeksPassed) * 100));
+    }
+
+    return 0;
+};
+
 const StatsPage = () => {
     const userId = localStorage.getItem("token");
     const [habits, setHabits] = useState<Habit[]>([]);
@@ -169,14 +195,22 @@ const StatsPage = () => {
                 callbacks: {
                     label: (context) => {
                         const index = context.dataIndex;
-                        const habit = habits[index];
+                        const habit = sortedHabits[index];
 
                         let unit = "дней";
+                        let completions = countHabitCompletions(habit);
+
                         if (habit.frequency === "weekly") {
                             unit = "недель";
+                            // тут берем "X" недель отдельно:
+                            completions = Object.entries(habit.days || {})
+                                .filter(([key, done]) => done && key.includes("W"))
+                                .length;
                         }
 
-                        return `${unit.charAt(0).toUpperCase() + unit.slice(1)}: ${context.parsed.y}`;
+                        const rate = getCompletionRate(habit);
+
+                        return `${unit.charAt(0).toUpperCase() + unit.slice(1)}: ${completions} (${rate}%)`;
                     },
                 },
             },
