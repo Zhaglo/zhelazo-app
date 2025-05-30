@@ -2,7 +2,7 @@ import { Habit } from "./habit";
 
 export interface BaseCardProps {
     habit: Habit;
-    onToggle: (habitId: string, key: string) => void;
+    onToggle: (habitId: string, key: string, extraKey?: string) => void;
     onDelete: (habitId: string) => void;
 }
 

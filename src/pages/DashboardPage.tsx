@@ -73,17 +73,26 @@ const DashboardPage = () => {
         saveHabits(updatedHabits);
     };
 
-    const toggleDay = (habitId: string, key: string) => {
+    const toggleDay = (habitId: string, key: string, extraKey?: string) => {
         const allHabits = JSON.parse(localStorage.getItem("habits") || "[]");
         const updated = allHabits.map((habit: Habit) => {
             if (habit.id === habitId) {
-                const current = habit.days?.[key] || false;
+                const newDays = { ...habit.days };
+                const current = !!newDays[key];
+                newDays[key] = !current;
+
+                // если передан extraKey → это todayKey для WeeklyCard
+                if (extraKey) {
+                    if (!current) {
+                        newDays[extraKey] = true;
+                    } else {
+                        delete newDays[extraKey];
+                    }
+                }
+
                 return {
                     ...habit,
-                    days: {
-                        ...habit.days,
-                        [key]: !current,
-                    },
+                    days: newDays,
                 };
             }
             return habit;

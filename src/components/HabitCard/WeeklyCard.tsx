@@ -13,6 +13,15 @@ const WeeklyCard = ({ habit, onToggle, onDelete, weekKey }: WeeklyCardProps) => 
         ([key, val]) => val && key.includes("W")
     ).length;
 
+    const toggleWeek = () => {
+        const today = new Date();
+        const todayKey = today.toLocaleDateString("ru-RU").split(".").join(".");
+
+        // Вместо того чтобы самим ковырять localStorage —
+        // просто передаем оба ключа родителю
+        onToggle(habit.id, weekKey, todayKey);
+    };
+
     const toggleEdit = () => setIsEditing(!isEditing);
 
     const saveDescription = () => {
@@ -56,7 +65,7 @@ const WeeklyCard = ({ habit, onToggle, onDelete, weekKey }: WeeklyCardProps) => 
 
                 <button
                     className={`${base.checkBtn} ${isChecked ? base.done : ""}`}
-                    onClick={() => onToggle(habit.id, weekKey)}
+                    onClick={toggleWeek}
                 >
                     {isChecked && "✓"}
                 </button>
@@ -78,7 +87,6 @@ const WeeklyCard = ({ habit, onToggle, onDelete, weekKey }: WeeklyCardProps) => 
                 ) : null}
             </div>
 
-            {/* Стрелка (всегда показываем, даже если описание только планируется) */}
             {(habit.description || habit.createdAt || isEditing) && (
                 <div
                     className={`${base.slideTrigger} ${showDescription ? base.open : ""}`}
@@ -88,7 +96,6 @@ const WeeklyCard = ({ habit, onToggle, onDelete, weekKey }: WeeklyCardProps) => 
                 </div>
             )}
 
-            {/* Блок описания */}
             {(habit.description || habit.createdAt) && (
                 <div className={`${base.descriptionWrapper} ${showDescription ? base.open : ""}`}>
                     <div className={base.slideContent}>
