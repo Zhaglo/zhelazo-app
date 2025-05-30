@@ -82,3 +82,64 @@
     }
   }
 }
+
+.trendToast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  z-index: 100;
+  animation: fadeInUp 0.5s ease;
+  backdrop-filter: blur(6px);
+
+  background-color: #f4f6f8; /* светло-серый */
+  color: #455a64; /* серый текст */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Крестик */
+.trendToast button {
+  background: none;
+  border: none;
+  color: inherit; /* цвет как у текста */
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Рост */
+.trendUp {
+  background-color: #e0f6e9; /* светло-зеленый фон */
+  color: #2e7d32; /* зеленый текст */
+}
+
+/* Падение */
+.trendDown {
+  background-color: #fdecea; /* светло-красный фон */
+  color: #c62828; /* красный текст */
+}
+
+/* Нейтральный */
+.trendNeutral {
+  background-color: #f4f6f8; /* светло-серый фон */
+  color: #455a64; /* серый текст */
+}

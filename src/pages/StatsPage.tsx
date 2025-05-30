@@ -179,10 +179,25 @@ const getHabitDayOfWeek = (habit: Habit): number[] => {
     return result;
 };
 
+const getLastNDates = (n: number): string[] => {
+    const dates: string[] = [];
+    const today = new Date();
+
+    for (let i = 0; i < n; i++) {
+        const d = new Date(today);
+        d.setDate(today.getDate() - i);
+        const dateStr = d.toLocaleDateString("ru-RU").split(".").join(".");
+        dates.push(dateStr);
+    }
+
+    return dates;
+};
+
 const StatsPage = () => {
     const userId = localStorage.getItem("token");
     const [habits, setHabits] = useState<Habit[]>([]);
     const [filterType, setFilterType] = useState<"all" | "daily" | "hourly" | "weekly">("all");
+    const [showTrend, setShowTrend] = useState(true);
 
     useEffect(() => {
         const allHabits = JSON.parse(localStorage.getItem("habits") || "[]");
@@ -322,6 +337,63 @@ const StatsPage = () => {
         return bCount - aCount;
     });
 
+    const getTrend = (): string => {
+        // Берем 7 дней назад и 7-14 дней назад
+        const thisWeekDates = getLastNDates(7);
+        const lastWeekDates = getLastNDates(14).slice(7);
+
+        // Функция подсчета выполнений в списке дат
+        const countInDates = (dates: string[]): number => {
+            return sortedHabits.reduce((acc, habit) => {
+                const days = habit.days || {};
+
+                if (habit.frequency === "daily") {
+                    return acc + dates.filter(d => days[d]).length;
+                }
+
+                if (habit.frequency === "hourly") {
+                    return acc + dates.filter(date => {
+                        const timeRange = habit.timeRange;
+                        if (!timeRange) return false;
+
+                        const expectedHours = generateIntervalHours(timeRange.from, timeRange.to, timeRange.interval || 1);
+                        return expectedHours.every(hour => !!days[`${date}_${hour}`]);
+                    }).length;
+                }
+
+                if (habit.frequency === "weekly") {
+                    // Смотрим есть ли дата в habit.days[дата]
+                    return acc + dates.filter(d => days[d]).length;
+                }
+
+                return acc;
+            }, 0);
+        };
+
+        const thisWeekCount = countInDates(thisWeekDates);
+        const lastWeekCount = countInDates(lastWeekDates);
+
+        // Считаем тренд
+        if (lastWeekCount === 0 && thisWeekCount === 0) {
+            return "Недостаточно данных для тренда";
+        }
+
+        if (lastWeekCount === 0 && thisWeekCount > 0) {
+            return `📈 Прогресс вырос (новая активность!)`;
+        }
+
+        const diff = thisWeekCount - lastWeekCount;
+        const percent = Math.abs(Math.round((diff / lastWeekCount) * 100));
+
+        if (diff > 0) {
+            return `📈 Прогресс вырос на +${percent}%`;
+        } else if (diff < 0) {
+            return `📉 Прогресс снизился на -${percent}%`;
+        } else {
+            return `➡️ Прогресс без изменений`;
+        }
+    };
+
     const chartData = {
         labels: sortedHabits.map((h) =>
             h.title.length > 15 ? h.title.slice(0, 15) + "…" : h.title
@@ -443,6 +515,17 @@ const StatsPage = () => {
 
     const unitText = pluralize(bestStreak, unitForms);
 
+    const trendText = getTrend();
+    let trendClass = "";
+
+    if (trendText.includes("📈")) {
+        trendClass = styles.trendUp;
+    } else if (trendText.includes("📉")) {
+        trendClass = styles.trendDown;
+    } else {
+        trendClass = styles.trendNeutral;
+    }
+
     return (
         <div className={styles.wrapper}>
             <h2 className={styles.title}>📊 Статистика</h2>
@@ -482,6 +565,13 @@ const StatsPage = () => {
                         </div>
                     </div>
                 </>
+            )}
+
+            {showTrend && (
+                <div className={`${styles.trendToast} ${trendClass}`}>
+                    {getTrend()}
+                    <button onClick={() => setShowTrend(false)}>&times;</button>
+                </div>
             )}
         </div>
     );
