@@ -424,6 +424,25 @@ const StatsPage = () => {
         },
     };
 
+    function pluralize(count: number, forms: [string, string, string]) {
+        const mod10 = count % 10;
+        const mod100 = count % 100;
+
+        if (mod10 === 1 && mod100 !== 11) {
+            return forms[0];
+        } else if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) {
+            return forms[1];
+        } else {
+            return forms[2];
+        }
+    }
+
+    const unitForms = filterType === "weekly"
+        ? ["неделя", "недели", "недель"] as unknown as [string, string, string]
+        : ["день", "дня", "дней"] as unknown as [string, string, string];
+
+    const unitText = pluralize(bestStreak, unitForms);
+
     return (
         <div className={styles.wrapper}>
             <h2 className={styles.title}>📊 Статистика</h2>
@@ -443,11 +462,7 @@ const StatsPage = () => {
                 <StatsBlock label="Всего выполнений" value={totalCompletions} />
                 <StatsBlock
                     label="Максимальный стрик"
-                    value={
-                        filterType === "weekly"
-                            ? `${bestStreak} недель подряд🔥`
-                            : `${bestStreak} дней подряд🔥`
-                    }
+                    value={`${bestStreak} ${unitText} подряд🔥`}
                 />
             </div>
 
