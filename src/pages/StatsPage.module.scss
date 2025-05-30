@@ -1,6 +1,6 @@
 .wrapper {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1366px;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
@@ -45,12 +45,40 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+
+  label {
+    flex-shrink: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
 
   select {
-    padding: 0.4rem 0.75rem;
-    font-size: 1rem;
-    border-radius: 6px;
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
     border: 1px solid #ccc;
+    font-size: 1rem;
+    background: #f9f9f9;
+    cursor: pointer;
+    transition: border 0.2s, box-shadow 0.2s;
+
+    &:hover {
+      border-color: #888;
+    }
+
+    &:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+      outline: none;
+    }
   }
 }
