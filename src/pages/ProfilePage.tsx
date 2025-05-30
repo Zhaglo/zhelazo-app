@@ -168,7 +168,7 @@ const ProfilePage = () => {
                 </div>
 
                 {/* Кнопка */}
-                <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+                <div className={styles.editButtonWrapper}>
                     <button
                         className={styles.editButton}
                         onClick={() => {
@@ -179,6 +179,7 @@ const ProfilePage = () => {
                         ✏️ Редактировать профиль
                     </button>
                 </div>
+
             </div>
 
             {/* Модалка */}
