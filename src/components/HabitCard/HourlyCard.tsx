@@ -34,14 +34,25 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
     const pct = hours.length > 0 ? Math.round((doneHours.length / hours.length) * 100) : 0;
     const angleStep = 360 / hours.length;
 
+    const now = new Date();
+    const currentHour = now.getHours();
+
+    // Только доступные часы (прошедшие)
+    const availableHours = hours.filter((hour) => {
+        const hourNumber = parseInt(hour.split(":")[0]);
+        return hourNumber <= currentHour;
+    });
+
+    const doneAvailable = availableHours.filter((hour) => habit.days?.[`${today}_${hour}`]);
+
     const toggleHour = (hour: string) => {
         const key = `${today}_${hour}`;
         onToggle(habit.id, key);
     };
 
     const toggleAll = () => {
-        const markAll = doneHours.length !== hours.length;
-        hours.forEach((hour) => {
+        const markAll = doneAvailable.length !== availableHours.length;
+        availableHours.forEach((hour) => {
             const key = `${today}_${hour}`;
             const current = !!habit.days?.[key];
             if (current !== markAll) {
@@ -88,13 +99,21 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
                         const x = 110 + 90 * Math.cos((angle * Math.PI) / 180);
                         const y = 110 + 90 * Math.sin((angle * Math.PI) / 180);
 
+                        const hourNumber = parseInt(hour.split(":")[0]);
+                        const isPastOrCurrent = hourNumber <= currentHour;
+
                         return (
                             <button
                                 key={hour}
                                 title={hour}
-                                className={`${styles.hourDot} ${isChecked ? styles.done : ""}`}
-                                onClick={() => toggleHour(hour)}
+                                className={`
+                                    ${styles.hourDot} 
+                                    ${isChecked ? styles.done : ""} 
+                                    ${!isPastOrCurrent ? styles.disabled : ""}
+                                `}
+                                onClick={() => isPastOrCurrent && toggleHour(hour)}
                                 style={{ left: `${x}px`, top: `${y}px` }}
+                                disabled={!isPastOrCurrent}
                             >
                                 {hour.slice(0, 2)}
                             </button>
@@ -106,9 +125,15 @@ const HourlyCard = ({ habit, onToggle, onDelete, today }: HourlyCardProps) => {
                         onMouseEnter={() => setHoveringCenter(true)}
                         onMouseLeave={() => setHoveringCenter(false)}
                         onClick={toggleAll}
-                        title={pct === 100 ? "Сбросить все часы" : "Отметить все часы"}
+                        title={
+                            doneAvailable.length === availableHours.length
+                                ? "Сбросить все доступные часы"
+                                : "Отметить все доступные часы"
+                        }
                     >
-                        {hoveringCenter ? (pct === 100 ? "✕" : "✓") : `${pct}%`}
+                        {hoveringCenter
+                            ? (doneAvailable.length === availableHours.length ? "✕" : "✓")
+                            : `${pct}%`}
                     </div>
                 </div>
 

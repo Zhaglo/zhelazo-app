@@ -29,6 +29,12 @@
   color: white;
 }
 
+.hourDot.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
+}
+
 .hourCenter {
   position: absolute;
   top: 50%;
