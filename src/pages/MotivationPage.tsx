@@ -28,6 +28,28 @@ const MotivationPage = () => {
 
         setQuoteOfDay(randomQuote);
         setStathamQuote(randomStatham);
+
+        // === Обновление прогресса пользователя ===
+        const userId = localStorage.getItem("token");
+        if (!userId) return;
+
+        const progressKey = `userProgress_${userId}`;
+        const currentProgress = JSON.parse(localStorage.getItem(progressKey) || "{}");
+
+        const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
+        if (currentProgress.lastMotivationVisit !== today) {
+            const updatedProgress = {
+                ...currentProgress,
+                motivationVisits: (currentProgress.motivationVisits || 0) + 1,
+                lastMotivationVisit: today
+            };
+
+            localStorage.setItem(progressKey, JSON.stringify(updatedProgress));
+
+            console.log("Обновлен прогресс:", updatedProgress);
+        }
+
     }, []);
 
     return (
