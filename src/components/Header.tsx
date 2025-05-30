@@ -1,13 +1,7 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from "./Header.module.scss";
 
 const Header = () => {
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        navigate("/login");
-    };
 
     return (
         <header className={styles.header}>
@@ -25,7 +19,6 @@ const Header = () => {
                     Профиль
                 </NavLink>
             </nav>
-            <button className="btn btn-outline-light" onClick={handleLogout}>Выйти</button>
         </header>
     );
 };

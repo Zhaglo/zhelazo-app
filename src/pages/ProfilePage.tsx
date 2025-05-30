@@ -167,8 +167,8 @@ const ProfilePage = () => {
                     </ul>
                 </div>
 
-                {/* Кнопка */}
-                <div className={styles.editButtonWrapper}>
+                {/* Кнопки */}
+                <div className={styles.buttonRow}>
                     <button
                         className={styles.editButton}
                         onClick={() => {
@@ -176,7 +176,16 @@ const ProfilePage = () => {
                             setShowModal(true);
                         }}
                     >
-                        ✏️ Редактировать профиль
+                        Редактировать профиль
+                    </button>
+                    <button
+                        className={styles.logoutButton}
+                        onClick={() => {
+                            localStorage.removeItem("token");
+                            window.location.href = "/login";
+                        }}
+                    >
+                        Выйти
                     </button>
                 </div>
 
