@@ -2,10 +2,9 @@
 
 /* ───────── Контейнер ───────── */
 .wrapper {
-  /* задаём коридор, но оставляем fluid-поведение */
-  max-width: 1366px;                // подбери под макет
+  max-width: 1366px;
   width: 100%;
-  margin-inline: auto;              // центрируем коридор
+  margin-inline: auto;
   padding-inline: clamp(1rem, 4vw, 2rem);
   box-sizing: border-box;
   flex: 1 0 auto;
