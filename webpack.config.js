@@ -8,6 +8,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
         clean: true,
+        publicPath: '/zhelazo-app/',
     },
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -55,6 +56,11 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'public/index.html',
+            filename: 'index.html',
+        }),
+        new HtmlWebpackPlugin({
+            template: 'public/404.html',
+            filename: '404.html',
         }),
         new MiniCssExtractPlugin({
             filename: '[name].css',

@@ -2,12 +2,15 @@
   "name": "zhelazo-app",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://zhaglo.github.io/zhelazo-app",
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
     "test": "jest",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
@@ -31,6 +34,7 @@
     "@types/react-dom": "^19.1.5",
     "@types/react-router-dom": "^5.3.3",
     "css-loader": "^7.1.2",
+    "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.6.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",

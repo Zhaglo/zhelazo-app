@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
 import DashboardPage from "./pages/Dashboard/DashboardPage";
@@ -10,7 +10,7 @@ import PrivateLayout from "./layouts/PrivateLayout";
 
 const App = () => {
     return (
-        <Router>
+        <BrowserRouter basename="/zhelazo-app">
             <Routes>
                 <Route path="/" element={<Navigate to="/dashboard" />} />
                 <Route path="/login" element={<LoginPage />} />
@@ -23,7 +23,7 @@ const App = () => {
                 </Route>
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
-        </Router>
+        </BrowserRouter>
     );
 };
 
