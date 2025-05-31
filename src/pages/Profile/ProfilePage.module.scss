@@ -93,9 +93,13 @@
 /* ─── статистика ─── */
 .profileStats {
   list-style: none;
-  padding: 0 0 0 3.5rem;
-  margin: 1rem 0;
-  width: 100%;
+  padding: 0;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 320px;
 
   li {
     padding: 0.5rem 0;
@@ -104,6 +108,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    justify-content: center;
   }
 }
 
