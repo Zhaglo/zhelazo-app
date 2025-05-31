@@ -128,7 +128,6 @@ const ProfilePage = () => {
 
     return (
         <div className={styles.wrapper}>
-            <h2 className={styles.pageTitle}>👤 Профиль пользователя</h2>
 
             <div className={styles.profileBlock}>
                 {/* Инфа */}
@@ -236,14 +235,14 @@ const ProfilePage = () => {
 
                         <div style={{ marginTop: "1rem", textAlign: "center" }}>
                             <button className={styles.editButton} onClick={handleSaveProfile}>
-                                ✅ Сохранить
+                                Сохранить
                             </button>
                             <button
                                 className={styles.editButton}
                                 style={{ marginLeft: "1rem", backgroundColor: "#ddd", color: "#333" }}
                                 onClick={() => setShowModal(false)}
                             >
-                                ❌ Отмена
+                                Отмена
                             </button>
                         </div>
                     </div>

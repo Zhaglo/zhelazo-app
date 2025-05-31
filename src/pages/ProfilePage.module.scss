@@ -1,47 +1,56 @@
-/* === Профиль — обертка страницы === */
+/* ProfilePage.module.scss — только цвета и фон, размеры НЕ трогаем */
+@use "../styles/variables" as *;
+
+/* ─── обёртка страницы ─── */
 .wrapper {
-  background-color: #f7f8fa;
+  background-color: var(--color-bg);
   min-height: 100vh;
   padding: 2rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-/* === Заголовок === */
+/* ─── заголовок ─── */
 .pageTitle {
   text-align: center;
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 2rem;
-  color: #333;
+  color: var(--color-text-heading);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
 }
 
-/* === Большой блок профиля === */
+/* ─── основной блок профиля ─── */
 .profileBlock {
-  background: #fff;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: 2rem 3rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  box-shadow:
+          inset 0 2px 4px rgba(255,255,255,0.04),
+          0 6px 18px rgba(0,0,0,0.25);
   margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* === Карточка профиля === */
+/* ─── карточка профиля ─── */
 .profileCard {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   padding: 1.5rem;
-  background: #fff;
+  background:
+          linear-gradient(rgba(255,255,255,.06), rgba(255,255,255,.06)),
+          var(--color-card-bg);
+  border: none;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
   margin-bottom: 1.5rem;
   width: 100%;
 }
@@ -49,77 +58,51 @@
 .profileCard h3 {
   font-size: 1.2rem;
   font-weight: 600;
-  margin-top: 0; /* убираем пустой отступ сверху! */
-  margin-bottom: 1rem; /* нормальный отступ вниз */
-  color: #333;
+  margin: 0 0 1rem 0;
+  color: var(--color-text-heading);
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-/* === Хэдер (аватар + инфа) === */
-.profileHeader {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
+/* ─── хэдер карточки ─── */
+.profileHeader { display: flex; flex-direction: column; align-items: center; margin-bottom: 1.5rem; }
 
-.profileAvatar {
-  font-size: 4rem;
-  margin-bottom: 0.5rem;
-}
-
-.profileName {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #222;
-}
-
-.profileTag {
-  font-size: 1rem;
-  color: #777;
-}
-
+.profileAvatar  { font-size: 4rem; margin-bottom: 0.5rem; }
+.profileName    { font-size: 1.4rem; font-weight: 600; color: var(--color-text-heading); }
+.profileTag     { font-size: 1rem; color: var(--color-text); opacity: 0.75; }
 .profileEmail,
-.profileRegistered {
-  font-size: 0.95rem;
-  color: #444;
-  margin-top: 0.25rem;
-}
+.profileRegistered { font-size: 0.95rem; color: var(--color-text); margin-top: 0.25rem; }
 
-/* === Секции === */
+/* ─── секционные заголовки ─── */
 .sectionTitle {
   font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: #333;
+  color: var(--color-text-heading);
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-/* === Статистика === */
+/* ─── статистика ─── */
 .profileStats {
   list-style: none;
-  padding: 0;
-  margin: 0;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  padding: 0 0 0 3.5rem;
+  margin: 1rem 0;
   width: 100%;
-  padding-left: 3.5rem; /* ✅ добавляем отступ слева */
 
   li {
     padding: 0.5rem 0;
     font-size: 1rem;
-    color: #333;
+    color: var(--color-text);
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
 }
 
-/* === Достижения === */
+/* ─── достижения ─── */
 .profileAchievements {
   list-style: none;
   padding: 0;
@@ -130,56 +113,37 @@
   justify-content: center;
 
   li {
-    background: #f9f9f9;
+    background: var(--color-bg-secondary);
     border-radius: 8px;
     padding: 0.5rem 0.9rem;
     font-size: 0.95rem;
-    color: #333;
+    color: var(--color-text);
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   }
 }
 
-.achIcon {
-  font-size: 1.2rem;
-}
+.achIcon { font-size: 1.2rem; }
 
-.buttonRow {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-/* === Кнопка редактировать === */
+/* ─── кнопки ─── */
 .editButton {
-  background-color: #1976d2;
-  color: #fff;
+  background-color: var(--color-accent);
+  color: var(--color-text);
   border: none;
   padding: 0.7rem 1.4rem;
   border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.2s ease;
-  margin-top: 0;
-  justify-content: center;
 
-  &:hover {
-    background-color: #1565c0;
-  }
-}
-
-.editButtonWrapper {
-  text-align: center;
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  &:hover { background-color: var(--color-accent-hover); }
 }
 
 .logoutButton {
   background-color: #f44336;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 6px;
   padding: 0.6rem 1.2rem;
@@ -187,18 +151,14 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
 
-  &:hover {
-    background-color: #d32f2f;
-  }
+  &:hover { background-color: #d32f2f; }
 }
 
+/* ─── модальное окно ─── */
 .modalOverlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0,0,0,0.5);
   z-index: 999;
   display: flex;
   align-items: center;
@@ -206,26 +166,38 @@
 }
 
 .modalContent {
-  background: #fff;
+  background: var(--color-card-bg);
   padding: 2rem;
+  padding-top: 1rem;
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   max-width: 400px;
   width: 100%;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
   text-align: left;
+
+  label {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    color: var(--color-text-heading);
+  }
+
+  input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-bg-secondary);
+    color: var(--color-text);
+  }
 }
 
-.modalContent label {
-  display: block;
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
-  color: #333;
-}
-
-.modalContent input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.25rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+.buttonRow {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;          /* ← расстояние между кнопками */
+  margin-top: 0;
+  flex-wrap: wrap;       /* если экран узкий – переносит на новую строку */
 }
