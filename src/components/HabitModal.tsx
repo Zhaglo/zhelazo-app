@@ -103,20 +103,19 @@ const HabitModal = ({ onClose, onAddHabit }: HabitModalProps) => {
                         </div>
                     )}
 
-                    <label>
-                        Цвет:
-                        <div className={styles.colorChoices}>
-                            {colors.map((c) => (
-                                <button
-                                    key={c}
-                                    type="button"
-                                    className={`${styles.colorDot} ${color === c ? styles.selected : ""}`}
-                                    style={{ backgroundColor: c }}
-                                    onClick={() => setColor(c)}
-                                />
-                            ))}
-                        </div>
-                    </label>
+                    <label className={styles.fieldLabel}>Цвет:</label>
+
+                    <div className={styles.colorChoices}>
+                        {colors.map((c) => (
+                            <button
+                                key={c}
+                                type="button"
+                                className={`${styles.colorDot} ${color === c ? styles.selected : ""}`}
+                                style={{ backgroundColor: c }}
+                                onClick={() => setColor(c)}
+                            />
+                        ))}
+                    </div>
 
                     <label>
                         Описание (необязательно):
