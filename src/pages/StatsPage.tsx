@@ -12,31 +12,10 @@ import {
 } from "chart.js";
 import StatsBlock from "../components/StatsBlock";
 import styles from "./StatsPage.module.scss";
+import { Habit } from "../types/habit";
+import { generateIntervalHours } from "../components/HabitCard/HourlyCard";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
-
-interface Habit {
-    id: string;
-    title: string;
-    color: string;
-    createdAt: string;
-    days: Record<string, boolean>;
-    userId: string;
-    frequency: "daily" | "hourly" | "weekly";
-    timeRange?: { from: string; to: string; interval?: number };
-}
-
-const generateIntervalHours = (from: string, to: string, step: number = 1): string[] => {
-    const result: string[] = [];
-    const start = parseInt(from.split(":")[0]);
-    const end = parseInt(to.split(":")[0]);
-
-    for (let h = start; h <= end; h += step) {
-        result.push(h.toString().padStart(2, "0") + ":00");
-    }
-
-    return result;
-};
 
 const countHabitCompletions = (habit: Habit): number => {
     const days = habit.days || {};
@@ -245,7 +224,7 @@ const StatsPage = () => {
 
                 const doneForDay = expectedHours.every((hour) => {
                     const k = `${datePart}_${hour}`;
-                    return !!habit.days[k];
+                    return habit.days[k];
                 });
 
                 if (doneForDay) {
@@ -413,6 +392,16 @@ const StatsPage = () => {
         ],
     };
 
+    const darkAxis = {
+        ticks: {
+            color: "#eaeaea", // ← белый/светлый
+            font: { size: 12 },
+        },
+        grid: {
+            color: "rgba(255,255,255,0.07)",   // тонкая сетка
+        },
+    } as const;
+
     const chartOptions: ChartOptions<"bar"> = {
         responsive: true,
         maintainAspectRatio: false,
@@ -437,10 +426,13 @@ const StatsPage = () => {
                         return `${unit.charAt(0).toUpperCase() + unit.slice(1)}: ${completions} (${rate}%)`;
                     },
                 },
+                titleColor: "#ffffff",
+                bodyColor:  "#ffffff",
             },
         },
         scales: {
-            y: { beginAtZero: true, ticks: { stepSize: 1 } },
+            x: { ...darkAxis },
+            y: { ...darkAxis, beginAtZero: true, ticks: { ...darkAxis.ticks, stepSize: 1 } },
         },
         animations: {
             y: {
@@ -486,7 +478,8 @@ const StatsPage = () => {
             },
         },
         scales: {
-            y: { beginAtZero: true, ticks: { stepSize: 1 } },
+            x: { ...darkAxis },
+            y: { ...darkAxis, beginAtZero: true, ticks: { ...darkAxis.ticks, stepSize: 1 } },
         },
         animations: {
             y: {
@@ -528,7 +521,6 @@ const StatsPage = () => {
 
     return (
         <div className={styles.wrapper}>
-            <h2 className={styles.title}>📊 Статистика</h2>
 
             <div className={styles.filterRow}>
                 <label>Тип привычек:</label>
