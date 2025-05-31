@@ -1,0 +1,41 @@
+@use "./variables" as *;
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);           // #ffffff
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+/* коробочная модель для всего, чтобы width учитывал padding */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Заголовки оставляем жирными и белыми через --color-text-heading */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-heading);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Ссылки — зелёные акценты */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-accent-hover);
+  }
+}
+
+/* Дополнительно — все параграфы, спаны, лейблы, списки и поля ввода */
+p, span, li, label, input, textarea, select {
+  color: var(--color-text);
+}
