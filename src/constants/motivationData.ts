@@ -1,5 +1,5 @@
 export const users = [
-    { name: "Алексей", tag: "@pussy_destroyer3000", emoji: "🍑", habit: "Пить воду", streak: 60 },
+    { name: "Алексей", tag: "@pussy_destroyer3000", emoji: "🚬", habit: "Потягиваться", streak: 60 },
     { name: "Алина", tag: "@cringe_barbie666", emoji: "💅", habit: "Утренняя зарядка", streak: 45 },
     { name: "Михаил", tag: "@no_scope_reader", emoji: "🔫", habit: "Чтение каждый день", streak: 30 },
     { name: "Михаил", tag: "@sigma_brat", emoji: "🧑🏼‍💻", habit: "Изучать C++", streak: 77 },
@@ -17,12 +17,12 @@ export const users = [
     { name: "Игорь", tag: "@frontend_god_69", emoji: "😈", habit: "Писать курсовую по Фронтенду", streak: 101 },
     { name: "Андрей", tag: "@math_cocaine", emoji: "➕", habit: "Изучать математику", streak: 42 },
     { name: "Светлана", tag: "@tsaritsa_monster322", emoji: "🎤", habit: "Петь каждый день", streak: 37 },
-    { name: "Максим", tag: "@zoom_zoom_runner", emoji: "🏎️", habit: "Бегать по утрам", streak: 48 },
+    { name: "Тимофей", tag: "@zoom_zoom_runner", emoji: "🏎️", habit: "Бегать по утрам", streak: 48 },
     { name: "Вероника", tag: "@law_abuser420", emoji: "⚖️", habit: "Читать профессиональную литературу", streak: 26 },
     { name: "Олег", tag: "@caffeine_junkie", emoji: "☕", habit: "Экспериментировать с кофе", streak: 19 },
     { name: "Мария", tag: "@podcast_addict666", emoji: "🎧", habit: "Слушать подкасты", streak: 31 },
     { name: "Руслан", tag: "@startup_godfather", emoji: "💼", habit: "Работать над стартапом", streak: 36 },
-    { name: "Татьяна", tag: "@piano_banger", emoji: "🎹", habit: "Учиться играть на пианино", streak: 24 },
+    { name: "Арсений", tag: "@sexophone_master", emoji: "🎷", habit: "Учиться играть на саксофоне", streak: 51 },
     { name: "Евгений", tag: "@photo_sniper777", emoji: "📸", habit: "Фотографировать каждый день", streak: 27 },
     { name: "Владимир", tag: "@time_manage_thug", emoji: "🕑", habit: "Планировать задачи на день", streak: 34 },
 ];
