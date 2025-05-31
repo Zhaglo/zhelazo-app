@@ -38,6 +38,11 @@
   width: auto;
 }
 
+.logoLink {
+  display: flex;                 /* чтобы высота равнялась картинке */
+  align-items: center;
+}
+
 /* ───────── Навигация ───────── */
 .nav {
   display: flex;
