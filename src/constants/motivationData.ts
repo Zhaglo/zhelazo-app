@@ -1,5 +1,5 @@
 export const users = [
-    { name: "Алексей", tag: "@pussy_destroyer3000", emoji: "🚬", habit: "Потягиваться", streak: 60 },
+    { name: "Алексей", tag: "@pussy_destroyer228", emoji: "🚬", habit: "Потягиваться", streak: 60 },
     { name: "Алина", tag: "@cringe_barbie666", emoji: "💅", habit: "Утренняя зарядка", streak: 45 },
     { name: "Михаил", tag: "@no_scope_reader", emoji: "🔫", habit: "Чтение каждый день", streak: 30 },
     { name: "Михаил", tag: "@sigma_brat", emoji: "🧑🏼‍💻", habit: "Изучать C++", streak: 77 },
@@ -9,7 +9,7 @@ export const users = [
     { name: "Иван", tag: "@diary_of_a_madman", emoji: "🧟‍♂️", habit: "Вести дневник", streak: 15 },
     { name: "Ольга", tag: "@kitchen_thug_228", emoji: "🔪", habit: "Готовить полезную еду", streak: 50 },
     { name: "Павел", tag: "@5am_gang_boy", emoji: "☀️", habit: "Ранний подъём", streak: 10 },
-    { name: "Виктория", tag: "@dictionary_dominator", emoji: "📚", habit: "Учить новое слово каждый день", streak: 55 },
+    { name: "Виктория", tag: "@dict_dominator", emoji: "📚", habit: "Учить новое слово каждый день", streak: 55 },
     { name: "Артур", tag: "@six_string_slayer", emoji: "🎸", habit: "Игра на гитаре", streak: 22 },
     { name: "Юлия", tag: "@chiropractor_queen", emoji: "🦴", habit: "Зарядка для спины", streak: 28 },
     { name: "Тимофей", tag: "@gym_snus_brat61", emoji: "🏋️‍♂️", habit: "Саморазвитие", streak: 33 },
