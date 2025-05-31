@@ -1,17 +1,21 @@
-@use "HabitCard.module" as *;
+@use "../../styles/variables" as *;
 
 /* Сетка и визуализация streak (недельный прогресс) */
 .streakRow {
   display: flex;
   justify-content: space-between;
-  padding: 20px 16px 0;
+  padding: 20px 16px 0;            /* сохранили 20px/16px */
   margin-bottom: 0.75rem;
   gap: 6px;
+
+  /* если внутри есть текстовые метки */
+  color: var(--color-text);       /* белый основной текст */
 }
 
+/* Ряд точек недели */
 .weekRow {
   display: flex;
-  gap: 0.4rem;
-  margin-bottom: 1.2rem;
+  gap: 0.4rem;                     /* примерно 6px */
   margin-top: -0.5rem;
+  margin-bottom: 1.2rem;
 }

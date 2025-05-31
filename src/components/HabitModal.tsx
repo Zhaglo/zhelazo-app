@@ -13,11 +13,18 @@ const HabitModal = ({ onClose, onAddHabit }: HabitModalProps) => {
     const [interval, setInterval] = useState(1);
     const modalRef = useRef<HTMLDivElement>(null);
 
+    // src/constants/habitColors.ts
+    // src/constants/habitColors.ts
+    // src/constants/habitColors.ts
     const colors = [
-        "#3aaee0", "#e03a3a", "#3ae078", "#e0d13a",
-        "#a03ae0", "#e07a3a", "#3a5ae0", "#e03aa0",
-        "#fa5b5b", "#5bfa91", "#ff66cc", "#ffa500",
-        "#4b0082", "#00ced1", "#9370db", "#ff69b4"
+        '#B22222', // FireBrick — глубокий красно-рубиновый
+        '#228B22', // ForestGreen — насыщенный тёмно-изумрудный
+        '#1E90FF', // DodgerBlue — яркий, но холодный синий
+        '#DAA520', // GoldenRod — тёплый золотисто-бронзовый
+        '#8A2BE2', // BlueViolet — насыщенный фиолетовый
+        '#00CED1', // DarkTurquoise — глубокий бирюзовый
+        '#FF4500', // OrangeRed — энергичный терракотовый
+        '#6A5ACD', // SlateBlue — чуть приглушённый яркий синий
     ];
 
     const handleSubmit = (e: React.FormEvent | KeyboardEvent) => {

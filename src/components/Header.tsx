@@ -1,10 +1,16 @@
 import { NavLink } from "react-router-dom";
+import logo from "../assets/logo.png";
 import styles from "./Header.module.scss";
 
 const Header = () => {
 
     return (
         <header className={styles.header}>
+
+            <div className={styles.logoContainer}>
+                <img src={logo} alt="ZHELAZO" className={styles.logoImage} />
+            </div>
+
             <nav className={styles.nav}>
                 <NavLink to="/dashboard" className={({ isActive }) => isActive ? `${styles.link} ${styles.active}` : styles.link}>
                     Главная

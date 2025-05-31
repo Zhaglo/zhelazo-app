@@ -1,3 +1,5 @@
+@use "../../styles/variables" as *;
+
 /* ───────── базовая карточка ───────── */
 .card {
   position: relative;
@@ -6,14 +8,19 @@
   min-width: 300px;
   max-width: 300px;
   border-radius: 14px;
-  background: #fff;
-  border: 1px solid #eee;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--color-border);
+  background: var(--color-card-bg);             // теперь светлее, чем фон
+  box-shadow:
+          inset 0 2px 4px rgba(255,255,255,0.05),
+          0 4px 14px rgba(0, 0, 0, 0.3);
   overflow: visible;
   transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
 
   &:hover {
     transform: translateY(-5px) rotate(-0.4deg);
+    box-shadow:
+            inset 0 2px 4px rgba(255,255,255,0.05),
+            0 6px 18px rgba(0, 0, 0, 0.4);
   }
 
   &.completed {
@@ -44,7 +51,7 @@
 
 .actions {
   display: flex;
-  gap: 0.25rem;        // 🔥 Сдвигает кнопки ближе
+  gap: 0.25rem;
   align-items: center;
 }
 
@@ -52,14 +59,14 @@
   margin: 0;
   font-size: 1.3rem;
   font-weight: 700;
-  flex-shrink: 1;      // 💥 ДОБАВЬ
-  flex-grow: 0;        // 💥 ДОБАВЬ
+  flex-shrink: 1;
+  flex-grow: 0;
 }
 
 .meta {
   margin: 0.5rem 0 1rem;
   font-size: 0.9rem;
-  color: #666;
+  color: var(--color-text);
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
@@ -80,6 +87,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  color: var(--color-text);
 }
 
 .card:hover .edit,
@@ -97,19 +105,21 @@
   border: none;
   font-size: 26px;
   cursor: pointer;
-  background: #f3f3f3;
-  color: #fff;
+  background-color: var(--color-dot-bg);
+  color: var(--color-text-heading);
   transition: background 0.25s;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
-}
-.checkBtn.done {
-  background: var(--color);
+
+  &.done {
+    background: var(--color);
+    color: var(--color-bg);
+  }
 }
 
-/* описание */
+/* ───────── описание ───────── */
 .descriptionEditor {
   margin-top: 0.75rem;
   display: flex;
@@ -119,7 +129,7 @@
 
 .descriptionInput {
   width: 100%;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 0.5rem 0.75rem;
   font-size: 0.9rem;
@@ -127,11 +137,18 @@
   resize: vertical;
   min-height: 70px;
   transition: border 0.2s ease;
-}
+  background: var(--color-bg-secondary);
+  color: var(--color-text);
 
-.descriptionInput:focus {
-  border-color: var(--color);
-  outline: none;
+  &:focus {
+    border-color: var(--color);
+    outline: none;
+  }
+
+  &::placeholder {
+    color: var(--color-text);
+    opacity: 0.6;
+  }
 }
 
 .editorButtons {
@@ -142,42 +159,43 @@
 
 .saveBtn {
   background: var(--color);
-  color: #fff;
+  color: var(--color-bg);
   border: none;
   padding: 0.4rem 1rem;
   border-radius: 8px;
   font-size: 0.9rem;
   cursor: pointer;
   transition: background 0.2s ease;
-}
 
-.saveBtn:hover {
-  background: #0884cc;
+  &:hover {
+    background: var(--color-accent-hover);
+  }
 }
 
 .cancelBtn {
-  background: #f2f2f2;
-  color: #555;
-  border: none;
+  background: var(--color-bg-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
   padding: 0.4rem 1rem;
   border-radius: 8px;
   font-size: 0.9rem;
   cursor: pointer;
   transition: background 0.2s ease;
-}
 
-.cancelBtn:hover {
-  background: #e0e0e0;
+  &:hover {
+    background: var(--color-border);
+  }
 }
 
 .descriptionWrapper {
   overflow: hidden;
   transition: max-height 0.4s ease;
   max-height: 0;
-}
-.descriptionWrapper.open,
-.descriptionWrapper.editing {
-  max-height: 300px;
+
+  &.open,
+  &.editing {
+    max-height: 300px;
+  }
 }
 
 .slideTrigger {
@@ -188,10 +206,11 @@
   overflow: hidden;
   border-bottom-left-radius: 14px;
   border-bottom-right-radius: 14px;
-}
-.slideTrigger.open {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+
+  &.open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 }
 
 .slideArrow {
@@ -203,25 +222,27 @@
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 5px solid #fff;
+  border-top: 5px solid var(--color-text-heading);
   pointer-events: none;
 }
 
 .slideContent {
-  background: #f9f9f9;
+  background: var(--color-bg-secondary);
   padding: 0.75rem 1rem;
   font-size: 0.85rem;
-  color: #444;
+  color: var(--color-text);
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
   white-space: pre-wrap;
   word-break: break-word;
   overflow-wrap: break-word;
-}
-.slideContent .createdAt {
-  font-size: 0.85rem;
-  color: #888;
-  margin-top: 0.5rem;
+
+  .createdAt {
+    font-size: 0.85rem;
+    color: var(--color-text);
+    opacity: 0.6;
+    margin-top: 0.5rem;
+  }
 }
 
 .bottomInfo {
@@ -229,10 +250,10 @@
   bottom: 18px;
   left: 18px;
   font-size: 0.9rem;
-  color: #666;
+  color: var(--color-text);
 }
 
-/* Общие стили для точек прогресса недели */
+/* ───────── прогресс недели ───────── */
 .weekProgressWrapper {
   padding: 20px 16px 0;
   margin-bottom: 0.75rem;
@@ -248,23 +269,26 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #e0e0e0;
+  background: var(--color-dot-bg);
   flex-shrink: 0;
-}
-.weekDot.filled {
-  background: var(--color, #3aaee0);
+
+  &.filled {
+    background: var(--color, var(--color-accent));
+  }
 }
 
-/* Общие стили для недельных точек streak */
+/* ───────── точки streak ───────── */
 .filledDot,
 .emptyDot {
   flex-grow: 1;
   height: 16px;
   border-radius: 50%;
 }
+
 .filledDot {
   background-color: var(--color);
 }
+
 .emptyDot {
-  background-color: #ddd;
+  background-color: var(--color-dot-bg);
 }
