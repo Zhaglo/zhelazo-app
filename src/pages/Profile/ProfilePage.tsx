@@ -1,6 +1,7 @@
 import styles from "./ProfilePage.module.scss";
 import { useEffect, useState } from "react";
 import { Habit } from "../../types/habit";
+import { useNavigate } from "react-router-dom";
 
 interface UserProfile {
     avatar: string;
@@ -17,6 +18,8 @@ const ProfilePage = () => {
     const userHabits = allHabits.filter(h => h.userId === userId);
 
     const rawProfile = JSON.parse(localStorage.getItem(`userProfile_${userId}`) || "{}");
+
+    const navigate = useNavigate();
 
     const initialProfile: UserProfile = {
         avatar: rawProfile.avatar || "😈",
@@ -181,7 +184,7 @@ const ProfilePage = () => {
                         className={styles.logoutButton}
                         onClick={() => {
                             localStorage.removeItem("token");
-                            window.location.href = "/login";
+                            navigate('/login', { replace: true });
                         }}
                     >
                         Выйти
