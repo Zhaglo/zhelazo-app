@@ -3,7 +3,7 @@ import base from "./HabitCard.module.scss";
 import styles from "./HourlyCard.module.scss";
 import { HourlyCardProps } from "../../types/props";
 
-const generateIntervalHours = (from: string, to: string, step: number = 1): string[] => {
+export const generateIntervalHours = (from: string, to: string, step: number = 1): string[] => {
     const result: string[] = [];
     const start = parseInt(from.split(":")[0]);
     const end = parseInt(to.split(":")[0]);
