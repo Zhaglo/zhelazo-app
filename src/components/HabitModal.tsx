@@ -77,7 +77,7 @@ const HabitModal = ({ onClose, onAddHabit }: HabitModalProps) => {
                         <select value={frequency} onChange={(e) => setFrequency(e.target.value as Frequency)}>
                             <option value="daily">Ежедневная</option>
                             <option value="hourly">Ежечасная</option>
-                            <option value="weekly">Раз в неделю</option>
+                            <option value="weekly">Еженедельная</option>
                         </select>
                     </label>
 
