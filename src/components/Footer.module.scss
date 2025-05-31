@@ -1,0 +1,42 @@
+@use "../styles/variables" as *;
+
+/* ───────── футер ───────── */
+.footer {
+  background: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
+  width: 100%;
+  padding-block: 1rem;
+  margin-top: 2rem;
+}
+
+/* тот же «коридор», что и в Header / .wrapper */
+.inner {
+  max-width: 1366px;           /* при необходимости подгоните */
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+
+  display: flex;
+  align-items: center;
+  gap: .5rem;                  /* маленький пробел между текстом и ссылкой */
+}
+
+/* название проекта (обычный текст) */
+.brand {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* единственная кликабельная часть ― GitHub */
+.link {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color .2s ease;
+
+  &:hover {
+    color: var(--color-accent);
+  }
+}
