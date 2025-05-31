@@ -2,18 +2,29 @@
 
 /* ───────── Шапка ───────── */
 .header {
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+  height: 96px;
+  display: flex;
+  align-items: center;
+  /* «прилипает» к верху при прокрутке */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Внутренний контейнер с теми же границами,
+   что и .wrapper у контента */
+.inner {
+  width: 100%;
+  max-width: 1366px;          /* подгони под свой дизайн */
+  margin: 0 auto;
+  padding: 0 1rem;            /* одинаковые отступы слева/справа */
+  box-sizing: border-box;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  width: 100%;
-  height: 100px;                      /* увеличили высоту */
-  padding: 0 2rem;                   /* чуть больше горизонтальных отступов */
-  box-sizing: border-box;
-
-  background: var(--color-bg-secondary);
-  border-bottom: 1px solid var(--color-border);
-  z-index: 100;
 }
 
 /* ───────── Логотип ───────── */
@@ -23,27 +34,44 @@
 }
 
 .logoImage {
-  height: 200px;                      /* увеличенный логотип */
+  height: 60px;               /* высота логотипа */
   width: auto;
-  margin-right: 2rem;                /* чуть больше отступ справа */
 }
 
 /* ───────── Навигация ───────── */
 .nav {
   display: flex;
-  gap: 2rem;                         /* увеличили интервал между ссылками */
-  align-items: center;
+  gap: 2rem;                  /* расстояние между пунктами */
 }
 
 .navLink {
-  color: var(--color-text-heading);  /* чистый белый */
+  position: relative;
+  color: var(--color-text-heading);
   text-decoration: none;
-  font-size: 1rem;                   /* чуть больше текста */
+  font-size: 1rem;
   font-weight: 600;
   transition: color 0.2s ease;
 
-  &.active,
-  &:hover {
+  /* зелёное подчёркивание при ховере и в активном состоянии */
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover,
+  &.active {
     color: var(--color-text-heading);
+
+    &::after {
+      transform: scaleX(1);
+    }
   }
 }
