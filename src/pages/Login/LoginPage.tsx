@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/ui/Input";
-import styles from "./AuthForm.module.scss";
+import styles from "../Register/AuthForm.module.scss";
 
 const isValidEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -58,68 +58,70 @@ const LoginPage = () => {
     };
 
     return (
-        <div className={styles.wrapper}>
-            <h2 className={styles.title}>Вход</h2>
+        <div className={styles.pageWrapper}>
+            <div className={styles.wrapper}>
+                <h2 className={styles.title}>Вход</h2>
 
-            <form onSubmit={handleSubmit} className={styles.formWrapper}>
-                <div className={styles.formGroup}>
-                    <Input
-                        name="email"
-                        type="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        required
-                        className={
-                            touched.email && !isValidEmail(formData.email)
-                                ? styles.inputError
-                                : ""
-                        }
-                    />
-                    <div
-                        className={`${styles.helperText} ${
-                            touched.email && !isValidEmail(formData.email) ? styles.visible : ""
-                        }`}
-                    >
-                        Введите корректный email
+                <form onSubmit={handleSubmit} className={styles.formWrapper}>
+                    <div className={styles.formGroup}>
+                        <Input
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            required
+                            className={
+                                touched.email && !isValidEmail(formData.email)
+                                    ? styles.inputError
+                                    : ""
+                            }
+                        />
+                        <div
+                            className={`${styles.helperText} ${
+                                touched.email && !isValidEmail(formData.email) ? styles.visible : ""
+                            }`}
+                        >
+                            Введите корректный email
+                        </div>
                     </div>
-                </div>
 
-                <div className={styles.formGroup}>
-                    <Input
-                        name="password"
-                        type="password"
-                        placeholder="Пароль"
-                        value={formData.password}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        required
-                        className={
-                            touched.password && !formData.password
-                                ? styles.inputError
-                                : ""
-                        }
-                    />
-                    <div
-                        className={`${styles.helperText} ${
-                            touched.password && !formData.password ? styles.visible : ""
-                        }`}
-                    >
-                        Введите пароль
+                    <div className={styles.formGroup}>
+                        <Input
+                            name="password"
+                            type="password"
+                            placeholder="Пароль"
+                            value={formData.password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            required
+                            className={
+                                touched.password && !formData.password
+                                    ? styles.inputError
+                                    : ""
+                            }
+                        />
+                        <div
+                            className={`${styles.helperText} ${
+                                touched.password && !formData.password ? styles.visible : ""
+                            }`}
+                        >
+                            Введите пароль
+                        </div>
                     </div>
-                </div>
 
-                {error && <p className={styles.error}>{error}</p>}
+                    {error && <p className={styles.error}>{error}</p>}
 
-                <button type="submit" className="btn btn-primary">
-                    Войти
-                </button>
-            </form>
+                    <button type="submit" className="btn btn-primary">
+                        Войти
+                    </button>
+                </form>
 
-            <p className={styles.linkPrompt}>
-                Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
-            </p>
+                <p className={styles.linkPrompt}>
+                    Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
+                </p>
+            </div>
         </div>
     );
 };

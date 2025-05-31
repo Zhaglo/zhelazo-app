@@ -1,10 +1,10 @@
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
+// src/layouts/PrivateLayout.tsx
 import { Outlet, Navigate } from "react-router-dom";
+import Header  from "../components/Header/Header";
+import Footer  from "../components/Footer/Footer";
+import styles  from "./PrivateLayout.module.scss";   // ★ добавили css-модуль
 
-const isAuthenticated = () => {
-    return !!localStorage.getItem("token");
-};
+const isAuthenticated = () => Boolean(localStorage.getItem("token"));
 
 const PrivateLayout = () => {
     if (!isAuthenticated()) {
@@ -12,11 +12,13 @@ const PrivateLayout = () => {
     }
 
     return (
-        <div>
+        <div className={styles.layout}>
             <Header />
-            <main style={{ padding: "1rem auto" }}>
+
+            <main className={styles.content}>
                 <Outlet />
             </main>
+
             <Footer />
         </div>
     );

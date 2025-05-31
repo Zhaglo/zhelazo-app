@@ -8,6 +8,11 @@
   padding: 2rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
+
+  @include down($bp-tablet) {
+    max-width: none;
+    padding-inline: 1rem;
+  }
 }
 
 /* ─── заголовок ─── */
@@ -191,6 +196,12 @@
     border-radius: 6px;
     background: var(--color-bg-secondary);
     color: var(--color-text);
+  }
+
+  /* 📱 АДАПТИВНОСТЬ */
+  @media (max-width: 600px) {
+    padding: 1.5rem 1rem;
+    margin: 0 1rem; /* немного "отодвигает" от краёв экрана */
   }
 }
 

@@ -39,3 +39,12 @@ a {
 p, span, li, label, input, textarea, select {
   color: var(--color-text);
 }
+
+html, body {
+  height: 100%;          /* нужно, чтобы flex-колонка знала высоту */
+}
+
+body {
+  display: flex;
+  flex-direction: column; /* Header → Main → Footer вертикально   */
+}

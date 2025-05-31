@@ -1,0 +1,8 @@
+// mobile-first
+$bp-sm: 480px;   // мобильный портрет
+$bp-md: 768px;   // планшет
+$bp-lg: 1024px;  // landscape / small laptop
+$bp-xl: 1280px;  // десктоп
+
+@mixin up($bp)   { @media (min-width: $bp) { @content; } }
+@mixin down($bp) { @media (max-width: $bp - 1) { @content; } }

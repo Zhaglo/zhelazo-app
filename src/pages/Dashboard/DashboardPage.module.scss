@@ -1,3 +1,5 @@
+@use "../../styles/variables" as *;
+
 /* ───────── Контейнер ───────── */
 .wrapper {
   /* задаём коридор, но оставляем fluid-поведение */
@@ -6,6 +8,12 @@
   margin-inline: auto;              // центрируем коридор
   padding-inline: clamp(1rem, 4vw, 2rem);
   box-sizing: border-box;
+  flex: 1 0 auto;
+
+  @include down($bp-tablet) {
+    max-width: none;
+    padding-inline: 1rem;
+  }
 }
 
 .title {
@@ -27,6 +35,11 @@
   > * {
     align-self: flex-start;
     justify-self: center;
+  }
+
+  @include down($bp-mobile) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }
 

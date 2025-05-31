@@ -8,6 +8,11 @@
   max-width: 1366px;
   margin: 0 auto;
   padding: 0.5rem 1rem;
+
+  @include down($bp-tablet) {
+    max-width: none;
+    padding-inline: 1rem;
+  }
 }
 
 /* ───── грид «блоков-цифр» ───── */
@@ -125,4 +130,33 @@
 @keyframes fadeInUp {
   from { opacity: 0; transform: translate(-50%, 20px); }
   to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes fadeInUpMobile {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .trendToast {
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    border-radius: 0;
+    bottom: 0;
+    padding: 1rem;
+
+    animation: fadeInUpMobile 0.5s ease;
+
+    /* добавляем для центрирования */
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* кнопка крестик на мобилке пусть уходит вниз */
+  .trendToast button {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
 }

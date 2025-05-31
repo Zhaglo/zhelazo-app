@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/ui/Input";
-import styles from "../Login/AuthForm.module.scss";
+import styles from "./AuthForm.module.scss";
 
 const isValidEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -83,138 +83,140 @@ const RegisterPage = () => {
     };
 
     return (
-        <div className={styles.wrapper}>
-            <h2 className={styles.title}>Регистрация</h2>
+        <div className={styles.pageWrapper}>
+            <div className={styles.wrapper}>
+                <h2 className={styles.title}>Регистрация</h2>
 
-            <form onSubmit={handleSubmit} className={styles.formWrapper}>
-                <div className={styles.formGroup}>
-                    <Input
-                        name="username"
-                        placeholder="Имя"
-                        value={formData.username}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        required
-                        className={
-                            touched.username && !formData.username ? styles.inputError : ""
-                        }
-                    />
-                    <div
-                        className={`${styles.helperText} ${
-                            touched.username && !formData.username ? styles.visible : ""
-                        }`}
-                    >
-                        Введите имя
+                <form onSubmit={handleSubmit} className={styles.formWrapper}>
+                    <div className={styles.formGroup}>
+                        <Input
+                            name="username"
+                            placeholder="Имя"
+                            value={formData.username}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            required
+                            className={
+                                touched.username && !formData.username ? styles.inputError : ""
+                            }
+                        />
+                        <div
+                            className={`${styles.helperText} ${
+                                touched.username && !formData.username ? styles.visible : ""
+                            }`}
+                        >
+                            Введите имя
+                        </div>
                     </div>
-                </div>
 
-                <div className={styles.formGroup}>
-                    <Input
-                        name="tag"
-                        placeholder="Тег (например @frontend_god_69)"
-                        value={formData.tag}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        required
-                        className={
-                            touched.tag && !formData.tag ? styles.inputError : ""
-                        }
-                    />
-                    <div
-                        className={`${styles.helperText} ${
-                            touched.tag && !formData.tag ? styles.visible : ""
-                        }`}
-                    >
-                        Введите тег
+                    <div className={styles.formGroup}>
+                        <Input
+                            name="tag"
+                            placeholder="Тег (например @frontend_god_69)"
+                            value={formData.tag}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            required
+                            className={
+                                touched.tag && !formData.tag ? styles.inputError : ""
+                            }
+                        />
+                        <div
+                            className={`${styles.helperText} ${
+                                touched.tag && !formData.tag ? styles.visible : ""
+                            }`}
+                        >
+                            Введите тег
+                        </div>
                     </div>
-                </div>
 
-                <div className={styles.formGroup}>
-                    <Input
-                        name="email"
-                        type="email"
-                        placeholder="Email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        required
-                        className={
-                            touched.email && !isValidEmail(formData.email)
-                                ? styles.inputError
-                                : ""
-                        }
-                    />
-                    <div
-                        className={`${styles.helperText} ${
-                            touched.email && !isValidEmail(formData.email)
-                                ? styles.visible
-                                : ""
-                        }`}
-                    >
-                        Введите корректный email
+                    <div className={styles.formGroup}>
+                        <Input
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            required
+                            className={
+                                touched.email && !isValidEmail(formData.email)
+                                    ? styles.inputError
+                                    : ""
+                            }
+                        />
+                        <div
+                            className={`${styles.helperText} ${
+                                touched.email && !isValidEmail(formData.email)
+                                    ? styles.visible
+                                    : ""
+                            }`}
+                        >
+                            Введите корректный email
+                        </div>
                     </div>
-                </div>
 
-                <div className={styles.formGroup}>
-                    <Input
-                        name="password"
-                        type="password"
-                        placeholder="Пароль"
-                        value={formData.password}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        required
-                        className={
-                            touched.password && !formData.password
-                                ? styles.inputError
-                                : ""
-                        }
-                    />
-                    <div
-                        className={`${styles.helperText} ${
-                            touched.password && !formData.password ? styles.visible : ""
-                        }`}
-                    >
-                        Введите пароль
+                    <div className={styles.formGroup}>
+                        <Input
+                            name="password"
+                            type="password"
+                            placeholder="Пароль"
+                            value={formData.password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            required
+                            className={
+                                touched.password && !formData.password
+                                    ? styles.inputError
+                                    : ""
+                            }
+                        />
+                        <div
+                            className={`${styles.helperText} ${
+                                touched.password && !formData.password ? styles.visible : ""
+                            }`}
+                        >
+                            Введите пароль
+                        </div>
                     </div>
-                </div>
 
-                <div className={styles.formGroup}>
-                    <Input
-                        name="confirmPassword"
-                        type="password"
-                        placeholder="Повторите пароль"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        required
-                        className={
-                            touched.confirmPassword && !formData.confirmPassword
-                                ? styles.inputError
-                                : ""
-                        }
-                    />
-                    <div
-                        className={`${styles.helperText} ${
-                            touched.confirmPassword && !formData.confirmPassword
-                                ? styles.visible
-                                : ""
-                        }`}
-                    >
-                        Повторите пароль
+                    <div className={styles.formGroup}>
+                        <Input
+                            name="confirmPassword"
+                            type="password"
+                            placeholder="Повторите пароль"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            required
+                            className={
+                                touched.confirmPassword && !formData.confirmPassword
+                                    ? styles.inputError
+                                    : ""
+                            }
+                        />
+                        <div
+                            className={`${styles.helperText} ${
+                                touched.confirmPassword && !formData.confirmPassword
+                                    ? styles.visible
+                                    : ""
+                            }`}
+                        >
+                            Повторите пароль
+                        </div>
                     </div>
-                </div>
 
-                {error && <p className={styles.error}>{error}</p>}
+                    {error && <p className={styles.error}>{error}</p>}
 
-                <button type="submit" className="btn btn-primary">
-                    Зарегистрироваться
-                </button>
-            </form>
+                    <button type="submit" className="btn btn-primary">
+                        Зарегистрироваться
+                    </button>
+                </form>
 
-            <p className={styles.linkPrompt}>
-                Уже есть аккаунт? <Link to="/login">Войти</Link>
-            </p>
+                <p className={styles.linkPrompt}>
+                    Уже есть аккаунт? <Link to="/login">Войти</Link>
+                </p>
+            </div>
         </div>
     );
 };

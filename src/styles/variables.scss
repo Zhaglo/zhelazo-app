@@ -9,3 +9,11 @@
   --color-text: #ffffff;
   --color-text-heading: #ffffff;
 }
+
+$bp-mobile:   480px;   // телефоны
+$bp-tablet:   768px;   // маленькие планшеты
+$bp-laptop:  1024px;   // базовый макет (сейчас)
+$bp-desktop: 1440px;   // большие экраны
+
+@mixin down($bp)   { @media (max-width:  #{$bp}) { @content; } }
+@mixin up($bp)     { @media (min-width:  #{$bp}) { @content; } }

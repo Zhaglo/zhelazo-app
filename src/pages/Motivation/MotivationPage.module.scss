@@ -15,6 +15,11 @@ body {
   padding: 2rem 1rem;
   background-color: var(--color-bg);
   min-height: 100vh;
+
+  @include down($bp-tablet) {
+    max-width: none;
+    padding-inline: 1rem;
+  }
 }
 
 /* ───── заголовок страницы ───── */
