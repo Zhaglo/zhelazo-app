@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import DashboardPage from "./pages/DashboardPage";
-import StatsPage from "./pages/StatsPage";
-import MotivationPage from "./pages/MotivationPage";
-import ProfilePage from "./pages/ProfilePage";
-import NotFoundPage from "./pages/NotFoundPage";
+import LoginPage from "./pages/Login/LoginPage";
+import RegisterPage from "./pages/Register/RegisterPage";
+import DashboardPage from "./pages/Dashboard/DashboardPage";
+import StatsPage from "./pages/Stats/StatsPage";
+import MotivationPage from "./pages/Motivation/MotivationPage";
+import ProfilePage from "./pages/Profile/ProfilePage";
+import NotFoundPage from "./pages/NotFound/NotFoundPage";
 import PrivateLayout from "./layouts/PrivateLayout";
 
 const App = () => {

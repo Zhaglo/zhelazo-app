@@ -1,5 +1,5 @@
 import { NavLink, Link } from "react-router-dom";
-import logo from "../assets/logo3.png";
+import logo from "../../assets/logo.png";
 import styles from "./Header.module.scss";
 
 // маленький helper чтобы не плодить шаблонные строки

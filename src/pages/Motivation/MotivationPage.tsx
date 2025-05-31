@@ -1,6 +1,6 @@
 import styles from "./MotivationPage.module.scss";
 import { useState, useEffect } from "react";
-import { users, quotes, stathamQuotes } from "../data/motivationData";
+import { users, quotes, stathamQuotes } from "../../constants/motivationData";
 
 const MotivationPage = () => {
     const sortedUsers = [...users].sort((a, b) => b.streak - a.streak);

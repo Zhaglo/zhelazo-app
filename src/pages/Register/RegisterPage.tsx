@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Input from "../components/ui/Input";
-import styles from "./AuthForm.module.scss";
+import Input from "../../components/ui/Input";
+import styles from "../Login/AuthForm.module.scss";
 
 const isValidEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

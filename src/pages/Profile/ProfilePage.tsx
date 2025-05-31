@@ -1,6 +1,6 @@
 import styles from "./ProfilePage.module.scss";
 import { useEffect, useState } from "react";
-import { Habit } from "../types/habit";
+import { Habit } from "../../types/habit";
 
 interface UserProfile {
     avatar: string;

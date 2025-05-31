@@ -10,10 +10,10 @@ import {
     Legend,
     ChartOptions
 } from "chart.js";
-import StatsBlock from "../components/StatsBlock";
+import StatsBlock from "../../components/StatsBlock/StatsBlock";
 import styles from "./StatsPage.module.scss";
-import { Habit } from "../types/habit";
-import { generateIntervalHours } from "../components/HabitCard/HourlyCard";
+import { Habit } from "../../types/habit";
+import { generateIntervalHours } from "../../components/HabitCard/HourlyCard";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 

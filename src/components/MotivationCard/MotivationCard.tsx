@@ -1,5 +1,5 @@
 import styles from "./MotivationCard.module.scss";
-import { MotivationCardProps } from "../types/props"
+import { MotivationCardProps } from "../../types/props"
 
 const MotivationCard = ({ user, username, avatar = "🙂", habit, streak, target = 100 }: MotivationCardProps) => {
     const progressPercent = Math.min((streak / target) * 100, 100);

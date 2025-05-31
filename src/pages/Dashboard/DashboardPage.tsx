@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import HabitCard from "../components/HabitCard/HabitCard";
-import HabitModal from "../components/HabitModal";
+import HabitCard from "../../components/HabitCard/HabitCard";
+import HabitModal from "../../components/HabitModal/HabitModal";
 import styles from "./DashboardPage.module.scss";
 
 type Frequency = "daily" | "hourly" | "weekly";

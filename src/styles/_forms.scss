@@ -1,4 +1,4 @@
-@use "./variables" as *;
+@use "variables" as *;
 
 input, textarea, select {
   background-color: var(--color-bg-secondary);

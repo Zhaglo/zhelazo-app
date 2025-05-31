@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import styles from "./HabitModal.module.scss";
-import { Frequency } from "../types/habit";
-import { HabitModalProps } from "../types/props";
+import { Frequency } from "../../types/habit";
+import { HabitModalProps } from "../../types/props";
 
 const HabitModal = ({ onClose, onAddHabit }: HabitModalProps) => {
     const [title, setTitle] = useState("");
