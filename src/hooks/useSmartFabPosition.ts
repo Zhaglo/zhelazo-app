@@ -1,4 +1,3 @@
-// src/hooks/useSmartFabPosition.ts
 import { useEffect, useState } from "react";
 
 /**
@@ -13,7 +12,7 @@ export default function useSmartFabPosition(footerSelector = "footer") {
 
         const observer = new IntersectionObserver(
             ([entry]) => setNearFooter(entry.isIntersecting),
-            { root: null, threshold: 0.01 }
+            { root: null, threshold: 0.5 }
         );
 
         observer.observe(footer);
