@@ -3,20 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 import HabitCard from "../../components/HabitCard/HabitCard";
 import HabitModal from "../../components/HabitModal/HabitModal";
 import styles from "./DashboardPage.module.scss";
-
-type Frequency = "daily" | "hourly" | "weekly";
-
-interface Habit {
-    id: string;
-    title: string;
-    color: string;
-    createdAt: string;
-    days: Record<string, boolean>;
-    userId: string;
-    frequency: Frequency;
-    description?: string;
-    timeRange?: { from: string; to: string };
-}
+import useSmartFabPosition from "../../hooks/useSmartFabPosition";
+import { Habit, Frequency } from "../../types/habit";
 
 const formatDate = (date: Date) =>
     date.toLocaleDateString("ru-RU").split(".").join(".");
@@ -33,6 +21,7 @@ const DashboardPage = () => {
     const userId = localStorage.getItem("token");
     const [habits, setHabits] = useState<Habit[]>([]);
     const [showModal, setShowModal] = useState(false);
+    const liftFab = useSmartFabPosition();
 
     const now = new Date();
     const today = formatDate(now);
@@ -78,7 +67,7 @@ const DashboardPage = () => {
         const updated = allHabits.map((habit: Habit) => {
             if (habit.id === habitId) {
                 const newDays = { ...habit.days };
-                const current = !!newDays[key];
+                const current = newDays[key];
                 newDays[key] = !current;
 
                 // если передан extraKey → это todayKey для WeeklyCard
@@ -183,7 +172,10 @@ const DashboardPage = () => {
                 </>
             )}
 
-            <button className={styles.floatingButton} onClick={() => setShowModal(true)}>
+            <button
+                className={`${styles.floatingButton} ${liftFab ? styles.lift : ""}`}
+                onClick={() => setShowModal(true)}
+            >
                 <span className={styles.plus}>+</span>
                 Добавить привычку
             </button>

@@ -9,6 +9,8 @@
   box-sizing: border-box;
   flex: 1 0 auto;
 
+  padding-bottom: 4.25rem;
+
   @include down($bp-tablet) {
     max-width: none;
     padding-inline: 1rem;
@@ -75,9 +77,10 @@
 }
 
 .floatingButton {
-  position: sticky;
-  bottom: 2rem;   // отступ от низа видимой части main
-  margin-top: 2rem; // небольшой отступ сверху
+  position: fixed;
+  bottom: 2rem;   /* ★ главное изменение */
+  right: 2rem;
+  z-index: 999;
 
   background: var(--color-accent);
   color: #fff;
@@ -86,16 +89,12 @@
   font-size: 1rem;
   font-weight: 600;
   border-radius: 999px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 16px rgba(0 0 0 / 15%);
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: background 0.2s ease, transform 0.2s ease;
-
-  // центрируем кнопку по центру wrapper (если хочешь чтобы она шла по правому краю wrapper, скажи — дам вариант)
-  margin-left: auto;
-  margin-right: 0;
+  transition: background 0.2s, transform 0.2s;
 
   &:hover {
     background: var(--color-accent-hover);
@@ -104,9 +103,13 @@
 
   .plus {
     font-size: 1.2rem;
+    font-weight: bold;
     position: relative;
     top: 0.05rem;
-    font-weight: bold;
-    display: inline-block;
   }
+}
+
+.lift {
+  bottom: calc(var(--footer-height) + 2rem);
+  transition: bottom .25s ease;
 }
