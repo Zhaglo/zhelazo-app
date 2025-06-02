@@ -75,23 +75,27 @@
 }
 
 .floatingButton {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  position: sticky;
+  bottom: 2rem;   // отступ от низа видимой части main
+  margin-top: 2rem; // небольшой отступ сверху
+
   background: var(--color-accent);
   color: #fff;
   border: none;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  font-weight: 600; // жирный текст
+  font-weight: 600;
   border-radius: 999px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  z-index: 999;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   transition: background 0.2s ease, transform 0.2s ease;
+
+  // центрируем кнопку по центру wrapper (если хочешь чтобы она шла по правому краю wrapper, скажи — дам вариант)
+  margin-left: auto;
+  margin-right: 0;
 
   &:hover {
     background: var(--color-accent-hover);
@@ -99,9 +103,9 @@
   }
 
   .plus {
-    font-size: 1.2rem;       // чуть меньше плюса
+    font-size: 1.2rem;
     position: relative;
-    top: 0.05rem;             // немного выравниваем
+    top: 0.05rem;
     font-weight: bold;
     display: inline-block;
   }

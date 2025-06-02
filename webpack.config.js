@@ -2,13 +2,15 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+const isProd = process.env.NODE_ENV === 'production';
+
 module.exports = {
     entry: './src/index.tsx',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
         clean: true,
-        publicPath: '/zhelazo-app/',
+        publicPath: isProd ? '/zhelazo-app/' : '/',
     },
     resolve: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -58,10 +60,6 @@ module.exports = {
             template: 'public/index.html',
             filename: 'index.html',
         }),
-        new HtmlWebpackPlugin({
-            template: 'public/404.html',
-            filename: '404.html',
-        }),
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[id].css',
@@ -73,5 +71,5 @@ module.exports = {
         open: true,
         port: 3000,
     },
-    mode: 'development',
+    mode: isProd ? 'production' : 'development',
 };

@@ -8,9 +8,11 @@ import ProfilePage from "./pages/Profile/ProfilePage";
 import NotFoundPage from "./pages/NotFound/NotFoundPage";
 import PrivateLayout from "./layouts/PrivateLayout";
 
+const basename = process.env.NODE_ENV === 'production' ? '/zhelazo-app' : '/';
+
 const App = () => {
     return (
-        <BrowserRouter basename="/zhelazo-app">
+        <BrowserRouter basename={basename}>
             <Routes>
                 <Route path="/" element={<Navigate to="/dashboard" />} />
                 <Route path="/login" element={<LoginPage />} />
