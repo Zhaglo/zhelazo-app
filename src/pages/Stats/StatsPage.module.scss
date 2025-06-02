@@ -141,17 +141,14 @@
 
 @media (max-width: 600px) {
   .trendToast {
-    left: 0;
-    right: 0;
-    transform: none;
-    width: 100%;
-    border-radius: 0;
-    bottom: 0;
-    padding: 1rem;
-
-    animation: fadeInUpMobile 0.5s ease;
-
-    /* добавляем для центрирования */
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem);
+    max-width: 400px;
+    border-radius: 12px;
+    bottom: 20px;
+    padding: 0.75rem 1.25rem;
+    animation: fadeInUp 0.5s ease;
     justify-content: center;
     text-align: center;
   }
