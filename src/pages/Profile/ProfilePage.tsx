@@ -129,6 +129,30 @@ const ProfilePage = () => {
         setShowModal(false);
     };
 
+    // Закрываем модалку по клику на «Escape»
+    useEffect(() => {
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                setShowModal(false);
+            }
+        };
+
+        if (showModal) {
+            document.addEventListener("keydown", onKeyDown);
+        }
+        return () => {
+            document.removeEventListener("keydown", onKeyDown);
+        };
+    }, [showModal]);
+
+    // Клик по фону модалки (оверлею) закрывает её
+    const onOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        // Если кликнули именно по oверлею (не по .modalContent), закрываем
+        if ((e.target as HTMLDivElement).classList.contains(styles.modalOverlay)) {
+            setShowModal(false);
+        }
+    };
+
     return (
         <div className={styles.wrapper}>
 
@@ -195,7 +219,7 @@ const ProfilePage = () => {
 
             {/* Модалка */}
             {showModal && (
-                <div className={styles.modalOverlay}>
+                <div className={styles.modalOverlay} onClick={onOverlayClick}>
                     <div className={styles.modalContent}>
                         <h3>✏️ Редактировать профиль</h3>
 
