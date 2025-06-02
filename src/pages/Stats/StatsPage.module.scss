@@ -160,3 +160,8 @@
     margin-top: 0.5rem;
   }
 }
+
+.lift {
+  bottom: calc(var(--footer-height) + 20px);
+  transition: bottom .25s ease;
+}

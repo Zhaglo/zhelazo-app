@@ -14,6 +14,7 @@ import StatsBlock from "../../components/StatsBlock/StatsBlock";
 import styles from "./StatsPage.module.scss";
 import { Habit } from "../../types/habit";
 import { generateIntervalHours } from "../../components/HabitCard/HourlyCard";
+import useSmartFabPosition from "../../hooks/useSmartFabPosition";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
@@ -177,6 +178,7 @@ const StatsPage = () => {
     const [habits, setHabits] = useState<Habit[]>([]);
     const [filterType, setFilterType] = useState<"all" | "daily" | "hourly" | "weekly">("all");
     const [showTrend, setShowTrend] = useState(true);
+    const liftToast = useSmartFabPosition();
 
     useEffect(() => {
         const allHabits = JSON.parse(localStorage.getItem("habits") || "[]");
@@ -560,7 +562,9 @@ const StatsPage = () => {
             )}
 
             {showTrend && (
-                <div className={`${styles.trendToast} ${trendClass}`}>
+                <div
+                    className={`${styles.trendToast} ${trendClass} ${liftToast ? styles.lift : ""}`}
+                >
                     {getTrend()}
                     <button onClick={() => setShowTrend(false)}>&times;</button>
                 </div>
