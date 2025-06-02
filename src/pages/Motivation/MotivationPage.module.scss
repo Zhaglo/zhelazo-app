@@ -1,11 +1,4 @@
-/* MotivationPage.module.scss — только цвета и фон, размеры НЕ трогаем */
 @use "../../styles/variables" as *;
-
-/* ───── базовый фон всему приложению ───── */
-body {
-  background-color: var(--color-bg);
-  min-height: 100vh;
-}
 
 /* ───── центр контейнера ───── */
 .pageContainer,
@@ -14,7 +7,7 @@ body {
   margin: 0 auto;
   padding: 2rem 1rem;
   background-color: var(--color-bg);
-  min-height: 100vh;
+  padding-bottom: 1rem;
 
   @include down($bp-tablet) {
     max-width: none;
@@ -40,7 +33,7 @@ body {
   box-shadow:
           inset 0 2px 4px rgba(255,255,255,0.04),
           0 6px 16px rgba(0,0,0,0.25);
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -165,5 +158,5 @@ body {
   text-align: center;
   font-size: 0.95rem;
   color: var(--color-text);
-  margin-top: 1.5rem;
+  margin-top: 0.75rem;
 }

@@ -4,10 +4,10 @@
 /* ─── обёртка страницы ─── */
 .wrapper {
   background-color: var(--color-bg);
-  min-height: 100vh;
   padding: 2rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
+  padding-bottom: 1rem;
 
   @include down($bp-tablet) {
     max-width: none;
