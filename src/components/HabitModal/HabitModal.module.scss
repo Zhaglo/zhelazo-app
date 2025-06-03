@@ -101,6 +101,9 @@ textarea:focus {
   cursor: pointer;
   transition: transform .2s ease, border-color .2s ease;
 
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+
   &.selected {
     border-color: var(--color-text);
 

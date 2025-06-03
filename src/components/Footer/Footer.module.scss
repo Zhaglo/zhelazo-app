@@ -40,6 +40,9 @@
   text-decoration: none;
   transition: color .2s ease;
 
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+
   &:hover {
     color: var(--color-accent);
   }

@@ -94,6 +94,9 @@
   font-weight: 600;
   transition: color 0.2s ease;
 
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+
   /* зелёное подчёркивание при ховере и в активном состоянии */
   &::after {
     content: "";

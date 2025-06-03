@@ -77,6 +77,9 @@
     cursor: pointer;
     transition: border 0.2s, box-shadow 0.2s;
 
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+
     &:hover {
       border-color: var(--color-border-hover);
     }
