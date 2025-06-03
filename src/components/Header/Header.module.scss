@@ -41,6 +41,9 @@
 .logoLink {
   display: flex;                 /* чтобы высота равнялась картинке */
   align-items: center;
+
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ─────────  бургер-кнопка (скрыта на desktop) ───────── */
@@ -55,6 +58,9 @@
   border: none;
   cursor: pointer;
   z-index: 110;
+
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 
   span {
     width: 100%; height: 3px;

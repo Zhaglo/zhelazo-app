@@ -25,6 +25,9 @@
   justify-content: center;
   cursor: pointer;
 
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+
   &.done {
     background: var(--color);        // выполнено
     color: var(--color-text-heading);       // белый текст
@@ -55,6 +58,9 @@
   height: 60px;
   border-radius: 50%;
   transition: background 0.2s ease;
+
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover {
     background: rgba(255, 255, 255, 0.05);  // лёгкий светлый hover

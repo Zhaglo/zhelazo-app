@@ -96,6 +96,9 @@
   gap: 0.5rem;
   transition: bottom 0.3s ease, background 0.2s ease, transform 0.2s ease;
 
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+
   &:hover {
     background: var(--color-accent-hover);
     transform: translateY(-2px);
